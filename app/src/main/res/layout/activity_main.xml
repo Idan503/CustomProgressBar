@@ -11,7 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:barCornerRadius="20.0"
+        app:barBackgroundColor="#3627FB"
+        app:colorStart="#D812A5"
+        app:barPercent="0.1"
+
 
         />
+
 
 </RelativeLayout>

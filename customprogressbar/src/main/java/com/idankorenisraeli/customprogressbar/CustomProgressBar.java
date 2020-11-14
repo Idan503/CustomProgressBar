@@ -2,7 +2,6 @@ package com.idankorenisraeli.customprogressbar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -22,17 +21,23 @@ public class CustomProgressBar extends FrameLayout {
 
     //endregion
 
-    private float currentPercent;
+    private float barPercent;
 
     // region Attributes
     private float cornerRadius;
-    private int barPadding = 20;
-    private Color backgroundColor, colorStart, colorEnd, colorCenter;
+    private int barPadding;
+    private int backgroundColor;
+    private int colorStart;
+    private int colorEnd;
+    private int colorCenter;
+    private int textColor;
+    private ColorType colorType;
+
+
+
+    private int textGravity; // Place the text horizontally on the bar: left/right/center/start/end
+    private int textType; // Should the text show a custom string, or show current bar percentage/decimal value
     private String textString;
-    private BarTextGravity textGravity;
-    private BarTextType textType;
-    private BarColorType colorType;
-    //colors...
 
     //endregion
 
@@ -73,11 +78,22 @@ public class CustomProgressBar extends FrameLayout {
         if(attrs==null)
             return;
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomProgressBar, 0, 0);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomProgressBar, 0, 0);
         try {
-            cornerRadius = ta.getFloat(R.styleable.CustomProgressBar_barCornerRadius, 10);
+            cornerRadius = array.getFloat(R.styleable.CustomProgressBar_barCornerRadius, 10);
+            barPadding = array.getInt(R.styleable.CustomProgressBar_barPadding, 5);
+            backgroundColor = array.getColor(R.styleable.CustomProgressBar_barBackgroundColor, 0);
+            barPercent = array.getFloat(R.styleable.CustomProgressBar_barPercent, 0);
+
+            colorStart = array.getColor(R.styleable.CustomProgressBar_colorStart, 0);
+            colorEnd = array.getColor(R.styleable.CustomProgressBar_colorEnd, 0);
+            colorCenter = array.getColor(R.styleable.CustomProgressBar_colorCenter, 0);
+
+            textGravity = array.getInt(R.styleable.CustomProgressBar_textGravity, 0);
+            textType = array.getInt(R.styleable.CustomProgressBar_textType, 0);
+            textString = array.getString(R.styleable.CustomProgressBar_textData);
         } finally {
-            ta.recycle();
+            array.recycle();
         }
 
 
@@ -89,9 +105,10 @@ public class CustomProgressBar extends FrameLayout {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         backgroundCard.setLayoutParams(params);
 
-        backgroundCard.setCardBackgroundColor(Color.parseColor("#FFFFFF")); // background colors from attr
+        backgroundCard.setCardBackgroundColor(backgroundColor); // background colors from attr
         backgroundCard.setRadius(cornerRadius);
     }
+
 
     private void initForeground(Context context) {
         foregroundHolder = new LinearLayout(context);
@@ -101,21 +118,21 @@ public class CustomProgressBar extends FrameLayout {
         foregroundHolder.setLayoutParams(holderParams);
         foregroundHolder.setOrientation(LinearLayout.HORIZONTAL);
         foregroundHolder.setTranslationZ(90); //bring to front
-        foregroundHolder.setBackgroundColor(Color.parseColor("#888B4B"));
         foregroundHolder.setWeightSum(1);
 
-
+        
 
         foregroundCard = new CardView(context);
 
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-        cardParams.weight = 0.5f;
+        cardParams.weight = barPercent;
         foregroundCard.setLayoutParams(cardParams);
 
 
 
-        foregroundCard.setCardBackgroundColor(Color.parseColor("#4B4B4B")); // foreground colors from attr, can be changed by percent
+        foregroundCard.setCardBackgroundColor(colorStart); // foreground colors from attr, can be changed by percent
         foregroundCard.setRadius(cornerRadius); //from attrs
+
 
 
         foregroundHolder.addView(foregroundCard);
@@ -123,14 +140,24 @@ public class CustomProgressBar extends FrameLayout {
 
 
 
+    private void initText(Context context)
+    {
+        text = new TextView(context);
 
 
-    public float getCurrentPercent() {
-        return currentPercent;
+
+        foregroundCard.addView(text);
     }
 
-    public void setCurrentPercent(float currentPercent) {
-        this.currentPercent = currentPercent;
+
+
+
+    public float getBarPercent() {
+        return barPercent;
+    }
+
+    public void setBarPercent(float barPercent) {
+        this.barPercent = barPercent;
     }
 
     public float getCornerRadius() {
@@ -149,35 +176,35 @@ public class CustomProgressBar extends FrameLayout {
         this.barPadding = barPadding;
     }
 
-    public Color getBackgroundColor() {
+    public int getBackgroundColor() {
         return backgroundColor;
     }
 
-    public void setBackgroundColor(Color backgroundColor) {
+    public void setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
-    public Color getColorStart() {
+    public int getColorStart() {
         return colorStart;
     }
 
-    public void setColorStart(Color colorStart) {
+    public void setColorStart(int colorStart) {
         this.colorStart = colorStart;
     }
 
-    public Color getColorEnd() {
+    public int getColorEnd() {
         return colorEnd;
     }
 
-    public void setColorEnd(Color colorEnd) {
+    public void setColorEnd(int colorEnd) {
         this.colorEnd = colorEnd;
     }
 
-    public Color getColorCenter() {
+    public int getColorCenter() {
         return colorCenter;
     }
 
-    public void setColorCenter(Color colorCenter) {
+    public void setColorCenter(int colorCenter) {
         this.colorCenter = colorCenter;
     }
 
@@ -189,27 +216,35 @@ public class CustomProgressBar extends FrameLayout {
         this.textString = textString;
     }
 
-    public BarTextGravity getTextGravity() {
+    public int getTextGravity() {
         return textGravity;
     }
 
-    public void setTextGravity(BarTextGravity textGravity) {
+    public void setTextGravity(int textGravity) {
         this.textGravity = textGravity;
     }
 
-    public BarTextType getTextType() {
+    public int getTextType() {
         return textType;
     }
 
-    public void setTextType(BarTextType textType) {
+    public void setTextType(int textType) {
         this.textType = textType;
     }
 
-    public BarColorType getColorType() {
+    public ColorType getColorType() {
         return colorType;
     }
 
-    public void setColorType(BarColorType colorType) {
+    public void setColorType(ColorType colorType) {
         this.colorType = colorType;
+    }
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
     }
 }

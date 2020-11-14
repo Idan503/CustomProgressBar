@@ -3,6 +3,16 @@
 
     <declare-styleable name="CustomProgressBar">
         <attr name="barCornerRadius" format="float"/>
+        <attr name="barBackgroundColor" format="color"/>
+        <attr name="barTextGravity" format="enum"/>
+        <attr name="barText" format="string"/>
+        <attr name="barTextType" format="enum"/>
+        <attr name="colorStart" format="color"/>
+        <attr name="colorCenter" format="color"/>
+        <attr name="colorEnd" format="color"/>
+        <attr name="colorGradient" format="boolean"/>
+        <attr name="barPadding" format="integer"/>
+        <attr name="barPercent" format="float"/>
     </declare-styleable>
 
 </resources>

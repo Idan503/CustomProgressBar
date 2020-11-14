@@ -1,8 +1,11 @@
 package com.idankorenisraeli.customprogressbar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -21,7 +24,7 @@ public class CustomProgressBar extends FrameLayout {
 
     //endregion
 
-    private float barPercent;
+    private float value; //How much bar is full - Between 0 and 1
 
     // region Attributes
     private float cornerRadius;
@@ -31,13 +34,14 @@ public class CustomProgressBar extends FrameLayout {
     private int colorEnd;
     private int colorCenter;
     private int textColor;
+    private boolean textEnabled;
     private ColorType colorType;
 
 
 
-    private int textGravity; // Place the text horizontally on the bar: left/right/center/start/end
-    private int textType; // Should the text show a custom string, or show current bar percentage/decimal value
-    private String textString;
+    private TextGravity textGravity; // Place the text horizontally on the bar: left/right/center/start/end
+    private TextType textType; // Should the text show a custom string, or show current bar percentage/decimal value
+    private String textTitle;
 
     //endregion
 
@@ -64,16 +68,13 @@ public class CustomProgressBar extends FrameLayout {
     }
 
 
-    private void init(Context context, @Nullable AttributeSet attrs){
-        obtainAttributes(context,attrs);
-        initBackground(context);
-        initForeground(context);
 
-        addView(backgroundCard);
-        addView(foregroundHolder);
-    }
-
-
+    /**
+     * Those attributes can be set on xml file of where this view is implemented
+     * Check @attrs.xml for more information
+     * @param context Current context
+     * @param attrs Attributes list
+     */
     private void obtainAttributes(Context context, AttributeSet attrs){
         if(attrs==null)
             return;
@@ -83,20 +84,35 @@ public class CustomProgressBar extends FrameLayout {
             cornerRadius = array.getFloat(R.styleable.CustomProgressBar_barCornerRadius, 10);
             barPadding = array.getInt(R.styleable.CustomProgressBar_barPadding, 5);
             backgroundColor = array.getColor(R.styleable.CustomProgressBar_barBackgroundColor, 0);
-            barPercent = array.getFloat(R.styleable.CustomProgressBar_barPercent, 0);
+            value = array.getFloat(R.styleable.CustomProgressBar_barPercent, 0);
 
             colorStart = array.getColor(R.styleable.CustomProgressBar_colorStart, 0);
             colorEnd = array.getColor(R.styleable.CustomProgressBar_colorEnd, 0);
             colorCenter = array.getColor(R.styleable.CustomProgressBar_colorCenter, 0);
 
-            textGravity = array.getInt(R.styleable.CustomProgressBar_textGravity, 0);
-            textType = array.getInt(R.styleable.CustomProgressBar_textType, 0);
-            textString = array.getString(R.styleable.CustomProgressBar_textData);
+            textGravity = TextGravity.values()[array.getInt(R.styleable.CustomProgressBar_textGravity, 0)];
+            textType = TextType.values()[array.getInt(R.styleable.CustomProgressBar_textType, 0)];
+            textTitle = array.getString(R.styleable.CustomProgressBar_textTitle);
+            textEnabled = array.getBoolean(R.styleable.CustomProgressBar_textEnabled, true);
+            textColor = array.getColor(R.styleable.CustomProgressBar_textColor, 0);
         } finally {
             array.recycle();
         }
 
 
+    }
+
+
+
+    private void init(Context context, @Nullable AttributeSet attrs){
+        obtainAttributes(context,attrs);
+        initBackground(context);
+        initForeground(context);
+        initText(context);
+
+        addView(backgroundCard);
+        addView(foregroundHolder);
+        addView(text);
     }
 
 
@@ -125,7 +141,7 @@ public class CustomProgressBar extends FrameLayout {
         foregroundCard = new CardView(context);
 
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-        cardParams.weight = barPercent;
+        cardParams.weight = value;
         foregroundCard.setLayoutParams(cardParams);
 
 
@@ -133,31 +149,78 @@ public class CustomProgressBar extends FrameLayout {
         foregroundCard.setCardBackgroundColor(colorStart); // foreground colors from attr, can be changed by percent
         foregroundCard.setRadius(cornerRadius); //from attrs
 
-
-
         foregroundHolder.addView(foregroundCard);
     }
 
 
-
+    /**
+     * Initializing the inner text view.
+     * We can also choose Right/Left and not only Start/End
+     * Text is always vertically aligned to center
+     * @param context Current context
+     */
+    @SuppressLint("RtlHardcoded")
     private void initText(Context context)
     {
+        if(!textEnabled)
+            return;
         text = new TextView(context);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        text.setLayoutParams(params);
+
+        text.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
 
 
-        foregroundCard.addView(text);
+        switch (textGravity){
+            case START:
+                text.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+                break;
+            case END:
+                text.setGravity(Gravity.END  | Gravity.CENTER_VERTICAL);
+                break;
+            case LEFT:
+                text.setGravity(Gravity.LEFT  | Gravity.CENTER_VERTICAL);
+                break;
+            case RIGHT:
+                text.setGravity(Gravity.RIGHT  | Gravity.CENTER_VERTICAL);
+            case STICK_BAR:
+                //tbd
+                break;
+
+
+            default:
+                text.setGravity(Gravity.CENTER  | Gravity.CENTER_VERTICAL);
+        }
+
+
+        switch (textType){
+            case DECIMAL:
+                text.setText(value + "");
+                break;
+            case PERCENTAGE:
+                int percentage = (int)(value * 100);
+                text.setText(percentage + "%");
+                break;
+            default:
+                text.setText(textTitle); //setting the custom text given
+                break;
+        }
+
+        text.setTextColor(textColor);
+        text.setTranslationZ(90);
+
     }
 
 
 
 
-    public float getBarPercent() {
-        return barPercent;
+    public float getValue() {
+        return value;
     }
 
-    public void setBarPercent(float barPercent) {
-        this.barPercent = barPercent;
+    public void setValue(float value) {
+        this.value = value;
     }
 
     public float getCornerRadius() {
@@ -208,27 +271,27 @@ public class CustomProgressBar extends FrameLayout {
         this.colorCenter = colorCenter;
     }
 
-    public String getTextString() {
-        return textString;
+    public String getTextTitle() {
+        return textTitle;
     }
 
-    public void setTextString(String textString) {
-        this.textString = textString;
+    public void setTextTitle(String textTitle) {
+        this.textTitle = textTitle;
     }
 
-    public int getTextGravity() {
+    public TextGravity getTextGravity() {
         return textGravity;
     }
 
-    public void setTextGravity(int textGravity) {
+    public void setTextGravity(TextGravity textGravity) {
         this.textGravity = textGravity;
     }
 
-    public int getTextType() {
+    public TextType getTextType() {
         return textType;
     }
 
-    public void setTextType(int textType) {
+    public void setTextType(TextType textType) {
         this.textType = textType;
     }
 

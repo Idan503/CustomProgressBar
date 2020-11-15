@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -57,7 +58,9 @@ public class CustomProgressBar extends FrameLayout {
 
     //endregion
 
+    private final static int DEFAULT_COLOR = Color.WHITE; // Will be used when user did not apply an attribute
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
+    private final static String TAG = "CustomProgressBar";
 
 
 
@@ -100,10 +103,10 @@ public class CustomProgressBar extends FrameLayout {
             backgroundColor = array.getColor(R.styleable.CustomProgressBar_barBackgroundColor, Color.GRAY);
             value = array.getFloat(R.styleable.CustomProgressBar_value, 0);
 
-            colorStart = array.getColor(R.styleable.CustomProgressBar_colorStart, Color.BLUE);
-            colorEnd = array.getColor(R.styleable.CustomProgressBar_colorEnd, 0);
+            colorStart = array.getColor(R.styleable.CustomProgressBar_colorStart, -1);
+            colorEnd = array.getColor(R.styleable.CustomProgressBar_colorEnd, -1);
             colorCenter = array.getColor(R.styleable.CustomProgressBar_colorCenter, -1);
-            colorStatic = array.getColor(R.styleable.CustomProgressBar_colorStatic,0);
+            colorStatic = array.getColor(R.styleable.CustomProgressBar_colorStatic,-1);
             colorType = ColorType.values()[array.getInt(R.styleable.CustomProgressBar_colorType, 0)];
 
             textGravity = TextGravity.values()[array.getInt(R.styleable.CustomProgressBar_textGravity, 0)];
@@ -168,38 +171,115 @@ public class CustomProgressBar extends FrameLayout {
 
         switch (colorType){
             case SINGLE_STATIC:
+                validateColorAttrs(false);
                 foregroundCard.setCardBackgroundColor(colorStatic);
                 foregroundCard.setRadius(cornerRadius);
                 break;
+            case SINGLE_DYNAMIC:
+                boolean centerColorApplied = (colorCenter != 0);
+                validateColorAttrs(true);
+                foregroundCard.setCardBackgroundColor(getSingleDynamicColor(centerColorApplied));
+                foregroundCard.setRadius(cornerRadius);
+                break;
             case GRADIENT:
-                GradientDrawable backgroundGradient;
-                if(colorCenter!=-1) {
-                    backgroundGradient = new GradientDrawable(
-                            GradientDrawable.Orientation.LEFT_RIGHT,
-                            new int[]{colorStart, colorCenter, colorEnd});
-                }
-                else
-                {
-                    backgroundGradient = new GradientDrawable(
-                            GradientDrawable.Orientation.LEFT_RIGHT,
-                            new int[]{colorStart, colorEnd});
-                }
+                validateColorAttrs(true);
+                GradientDrawable backgroundGradient = createGradientBackground();
                 backgroundGradient.setCornerRadius(cornerRadius);
                 foregroundCard.setBackground(backgroundGradient);
                 break;
-
-
-
         }
 
 
-        //gd.setCornerRadius(0f);
-
         updateValue();
-
-
         foregroundHolder.addView(foregroundCard);
     }
+
+
+    /**
+     * Notifies to the user that he forgot to apply color attributes based on gradient/single mode.
+     * Setting the color to default if no attribute is applied
+     * @param gradient - current validation is for gradient attributes or single color
+     */
+    private void validateColorAttrs(boolean gradient)
+    {
+        if(gradient){
+            if(colorStart == -1){
+                Log.w(TAG, "colorStart attribute is not defined, although bar color type is gradient");
+                colorStart = DEFAULT_COLOR;
+            }
+            if(colorEnd == -1){
+                Log.w(TAG, "colorEnd attribute is not defined, although bar color type is gradient");
+                colorEnd = DEFAULT_COLOR;
+            }
+        }
+        else{
+            if(colorStatic==-1){
+                Log.w(TAG, "colorStatic attribute is not defined, although bar color type is static");
+                colorStatic = DEFAULT_COLOR;
+            }
+        }
+    }
+
+
+    /**
+     * Using colorStart, colorCenter (if applied), and colorEnd attributes
+     * to generate the gradient background of the bar
+     * @return GradientDrawable background with the applied radius.
+     */
+    private GradientDrawable createGradientBackground()
+    {
+        GradientDrawable gradient;
+        if(colorCenter!=-1) {
+            gradient = new GradientDrawable(
+                    GradientDrawable.Orientation.LEFT_RIGHT,
+                    new int[]{colorStart, colorCenter, colorEnd});
+        }
+        else
+        {
+            gradient = new GradientDrawable(
+                    GradientDrawable.Orientation.LEFT_RIGHT,
+                    new int[]{colorStart, colorEnd});
+        }
+        return gradient;
+    }
+
+
+    /**
+     * Calculates which is the current bar color by gradient colors and current bar value
+     * @return Current single dynamic color
+     * @param centerColorExists Applied a center color that makes a tricolor gradient bar
+     */
+    private int getSingleDynamicColor(boolean centerColorExists){
+        float r,g,b;
+        Color startColor = Color.valueOf(colorStart);
+        Color endColor = Color.valueOf(colorEnd);
+        Color centerColor = Color.valueOf(colorCenter);
+        if(centerColorExists){
+            if(value>=0.5){
+                // between center and end
+                r = centerColor.red() + value * (endColor.red() - centerColor.red());
+                g = centerColor.green() + value * (endColor.green() - centerColor.green());
+                b = centerColor.blue() + value * (endColor.blue() - centerColor.blue());
+            }
+            else{
+                // between start and center
+                r = startColor.red() + value * (centerColor.red() - startColor.red());
+                g = startColor.green() + value * (centerColor.green() - startColor.green());
+                b = startColor.blue() + value * (centerColor.blue() - startColor.blue());
+            }
+        }
+        else
+        {
+            //between start and end (No center)
+            r = startColor.red() + value * (endColor.red() - startColor.red());
+            g = startColor.green() + value * (endColor.green() - startColor.green());
+            b = startColor.blue() + value * (endColor.blue() - startColor.blue());
+        }
+
+        // now r,g,b representing the single color of bar's value percentage in the gradient
+        return android.graphics.Color.rgb(r,g,b);
+    }
+
 
 
 

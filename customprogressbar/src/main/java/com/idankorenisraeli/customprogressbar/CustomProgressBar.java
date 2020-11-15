@@ -3,6 +3,7 @@ package com.idankorenisraeli.customprogressbar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,6 +43,7 @@ public class CustomProgressBar extends FrameLayout {
     private TextGravity textGravity; // Place the text horizontally on the bar: left/right/center/start/end
     private TextType textType; // Should the text show a custom string, or show current bar percentage/decimal value
     private String textTitle;
+    private int textPadding;
 
     //endregion
 
@@ -82,11 +84,11 @@ public class CustomProgressBar extends FrameLayout {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomProgressBar, 0, 0);
         try {
             cornerRadius = array.getFloat(R.styleable.CustomProgressBar_barCornerRadius, 10);
-            barPadding = array.getInt(R.styleable.CustomProgressBar_barPadding, 5);
-            backgroundColor = array.getColor(R.styleable.CustomProgressBar_barBackgroundColor, 0);
-            value = array.getFloat(R.styleable.CustomProgressBar_barPercent, 0);
+            barPadding = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barPadding, 5);
+            backgroundColor = array.getColor(R.styleable.CustomProgressBar_barBackgroundColor, Color.GRAY);
+            value = array.getFloat(R.styleable.CustomProgressBar_value, 0);
 
-            colorStart = array.getColor(R.styleable.CustomProgressBar_colorStart, 0);
+            colorStart = array.getColor(R.styleable.CustomProgressBar_colorStart, Color.BLUE);
             colorEnd = array.getColor(R.styleable.CustomProgressBar_colorEnd, 0);
             colorCenter = array.getColor(R.styleable.CustomProgressBar_colorCenter, 0);
 
@@ -95,6 +97,7 @@ public class CustomProgressBar extends FrameLayout {
             textTitle = array.getString(R.styleable.CustomProgressBar_textTitle);
             textEnabled = array.getBoolean(R.styleable.CustomProgressBar_textEnabled, true);
             textColor = array.getColor(R.styleable.CustomProgressBar_textColor, 0);
+            textPadding = array.getDimensionPixelSize(R.styleable.CustomProgressBar_textPadding, 3);
         } finally {
             array.recycle();
         }
@@ -165,7 +168,9 @@ public class CustomProgressBar extends FrameLayout {
         if(!textEnabled)
             return;
         text = new TextView(context);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.setMargins(textPadding,textPadding,textPadding,textPadding);
         text.setLayoutParams(params);
 
         text.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
@@ -206,6 +211,7 @@ public class CustomProgressBar extends FrameLayout {
                 text.setText(textTitle); //setting the custom text given
                 break;
         }
+
 
         text.setTextColor(textColor);
         text.setTranslationZ(90);

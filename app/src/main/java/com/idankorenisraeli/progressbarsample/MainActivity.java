@@ -26,15 +26,14 @@ public class MainActivity extends AppCompatActivity {
         increaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customProgressBar.increase(0.1f);
-                customProgressBar.invalidate();
+                customProgressBar.increaseAnimated(0.1f,150);
             }
         });
 
         decreaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customProgressBar.decrease(0.1f);
+                customProgressBar.decreaseAnimated(0.1f, 150);
             }
         });
 

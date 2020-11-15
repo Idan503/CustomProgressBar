@@ -16,8 +16,12 @@
         app:textGravity="center"
         app:textColor="@color/white"
         app:textType="percentage"
+
         app:barPadding="5dp"
         app:textPadding="3dp"
+        app:colorStart="@color/black"
+        app:colorEnd="@color/white"
+        app:colorType="gradient"
         android:layout_marginTop="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"

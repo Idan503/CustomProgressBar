@@ -33,10 +33,17 @@
 
 
         <!-- COLORS / PATTERNS-->
+        <attr name="colorStatic" format="color"/>
         <attr name="colorStart" format="color"/>
         <attr name="colorCenter" format="color"/>
         <attr name="colorEnd" format="color"/>
         <attr name="colorGradient" format="boolean"/>
+
+        <attr name="colorType" format="enum">
+            <enum name="single_static" value="0"/>
+            <enum name="single_dynamic" value="1"/>
+            <enum name="gradient" value="2"/>
+        </attr>
 
 
         <!-- BAR APPEARANCE -->

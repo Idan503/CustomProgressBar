@@ -3,8 +3,12 @@ package com.idankorenisraeli.customprogressbar;
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,9 +39,7 @@ public class CustomProgressBar extends FrameLayout {
     private float cornerRadius;
     private int barPadding;
     private int backgroundColor;
-    private int colorStart;
-    private int colorEnd;
-    private int colorCenter;
+    private int colorStatic, colorStart, colorCenter, colorEnd;
     private int textColor;
     private boolean textEnabled;
     private ColorType colorType;
@@ -100,7 +102,9 @@ public class CustomProgressBar extends FrameLayout {
 
             colorStart = array.getColor(R.styleable.CustomProgressBar_colorStart, Color.BLUE);
             colorEnd = array.getColor(R.styleable.CustomProgressBar_colorEnd, 0);
-            colorCenter = array.getColor(R.styleable.CustomProgressBar_colorCenter, 0);
+            colorCenter = array.getColor(R.styleable.CustomProgressBar_colorCenter, -1);
+            colorStatic = array.getColor(R.styleable.CustomProgressBar_colorStatic,0);
+            colorType = ColorType.values()[array.getInt(R.styleable.CustomProgressBar_colorType, 0)];
 
             textGravity = TextGravity.values()[array.getInt(R.styleable.CustomProgressBar_textGravity, 0)];
             textType = TextType.values()[array.getInt(R.styleable.CustomProgressBar_textType, 0)];
@@ -159,15 +163,40 @@ public class CustomProgressBar extends FrameLayout {
         lt.disableTransitionType(LayoutTransition.DISAPPEARING);
         foregroundHolder.setLayoutTransition(lt);
 
-        
-
         foregroundCard = new CardView(context);
 
 
+        switch (colorType){
+            case SINGLE_STATIC:
+                foregroundCard.setCardBackgroundColor(colorStatic);
+                foregroundCard.setRadius(cornerRadius);
+                break;
+            case GRADIENT:
+                GradientDrawable backgroundGradient;
+                if(colorCenter!=-1) {
+                    backgroundGradient = new GradientDrawable(
+                            GradientDrawable.Orientation.LEFT_RIGHT,
+                            new int[]{colorStart, colorCenter, colorEnd});
+                }
+                else
+                {
+                    backgroundGradient = new GradientDrawable(
+                            GradientDrawable.Orientation.LEFT_RIGHT,
+                            new int[]{colorStart, colorEnd});
+                }
+                backgroundGradient.setCornerRadius(cornerRadius);
+                foregroundCard.setBackground(backgroundGradient);
+                break;
+
+
+
+        }
+
+
+        //gd.setCornerRadius(0f);
+
         updateValue();
 
-        foregroundCard.setCardBackgroundColor(colorStart); // foreground colors from attr, can be changed by percent
-        foregroundCard.setRadius(cornerRadius); //from attrs
 
         foregroundHolder.addView(foregroundCard);
     }

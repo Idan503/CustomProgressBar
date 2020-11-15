@@ -2,4 +2,17 @@
     <string name="app_name">ProgressBarSample</string>
     <string name="increase_example">+0.1</string>
     <string name="decrease_example">-0.1</string>
+    <string name="increase_animated_example">+0.1\nAnimated</string>
+    <string name="decrease_animated_example">-0.1\nAnimated</string>
+
+    <string name="text_type_title">Text Type</string>
+    <string name="text_type_percentage">Percentage</string>
+    <string name="text_type_decimal">Decimal</string>
+
+
+    <string name="text_gravity_title">Text Gravity</string>
+    <string name="text_gravity_start">Start</string>
+    <string name="text_gravity_end">End</string>
+    <string name="text_gravity_center">Center</string>
+
 </resources>

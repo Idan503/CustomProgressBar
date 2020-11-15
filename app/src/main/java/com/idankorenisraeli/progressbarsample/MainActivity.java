@@ -13,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
 
     CustomProgressBar customProgressBar;
     Button increaseBtn, decreaseBtn;
+    Button increaseAnimBtn, decreaseAnimBtn;
+
+    private static final int ANIMATION_DURATION = 250;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +29,28 @@ public class MainActivity extends AppCompatActivity {
         increaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customProgressBar.increaseAnimated(0.1f,150);
+                customProgressBar.increase(0.1f);
             }
         });
 
         decreaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customProgressBar.decreaseAnimated(0.1f, 150);
+                customProgressBar.decrease(0.1f);
+            }
+        });
+
+        increaseAnimBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customProgressBar.increaseAnimated(0.1f,ANIMATION_DURATION);
+            }
+        });
+
+        decreaseAnimBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customProgressBar.decreaseAnimated(0.1f,ANIMATION_DURATION);
             }
         });
 
@@ -44,5 +61,7 @@ public class MainActivity extends AppCompatActivity {
         customProgressBar = findViewById(R.id.main_CPB_example_bar);
         increaseBtn = findViewById(R.id.main_BTN_increase);
         decreaseBtn = findViewById(R.id.main_BTN_decrease);
+        increaseAnimBtn = findViewById(R.id.main_BTN_increase_animated);
+        decreaseAnimBtn = findViewById(R.id.main_BTN_decrease_animated);
     }
 }

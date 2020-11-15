@@ -34,32 +34,154 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/main_CPB_example_bar"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/main_LAY_buttons_1"
         >
 
         <Button
-            android:layout_width="80dp"
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:text="@string/decrease_example"
+            android:layout_margin="15dp"
+            android:id="@+id/main_BTN_decrease"
+            style="?buttonStyle"
+            />
+
+        <Button
+            android:layout_width="140dp"
             android:layout_height="80dp"
             android:text="@string/increase_example"
-            android:layout_margin="20dp"
+            android:layout_margin="15dp"
             android:id="@+id/main_BTN_increase"
             style="?buttonStyle"
             />
 
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:text="@string/decrease_example"
-            android:layout_margin="20dp"
-            android:id="@+id/main_BTN_decrease"
-            style="?buttonStyle"
-            />
 
 
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_LAY_buttons_1"
+        android:gravity="center"
+        android:id="@+id/main_LAY_buttons_2"
+        >
 
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:text="@string/decrease_animated_example"
+            android:layout_margin="15dp"
+            android:id="@+id/main_BTN_decrease_animated"
+            style="?buttonStyle"
+            android:lines="2"
+            />
+
+
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="80dp"
+            android:text="@string/increase_animated_example"
+            android:layout_margin="15dp"
+            android:id="@+id/main_BTN_increase_animated"
+            style="?buttonStyle"
+            android:lines="2"
+            />
+
+
+    </LinearLayout>
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@id/main_LAY_buttons_2"
+    android:gravity="center"
+    >
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_LAY_buttons_text_type"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            >
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:id="@+id/main_LBL_type_title"
+                android:text="@string/text_type_title"
+                android:gravity="center"
+                android:autoSizeTextType="uniform"
+                android:padding="5dp"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/text_type_percentage"
+                android:id="@+id/main_RTB_percentage"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/text_type_decimal"
+                android:id="@+id/main_RTB_decimal"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_LAY_buttons_text_gravity"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            >
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:id="@+id/main_LBL_gravity_title"
+                android:text="@string/text_gravity_title"
+                android:gravity="center"
+                android:autoSizeTextType="uniform"
+                android:padding="5dp"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/text_gravity_start"
+                android:id="@+id/main_RTB_start"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/text_gravity_center"
+                android:id="@+id/main_RTB_center"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/text_gravity_end"
+                android:id="@+id/main_RTB_end"
+                />
+
+        </LinearLayout>
+
+</LinearLayout>
 
 
 

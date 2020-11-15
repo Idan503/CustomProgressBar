@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ProgressBarSample</string>
+    <string name="increase_example">+0.1</string>
+    <string name="decrease_example">-0.1</string>
 </resources>

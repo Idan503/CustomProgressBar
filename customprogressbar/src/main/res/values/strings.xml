@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CustomProgressBar</string>
+    <string name="bar_text_decimal_value">%1$.2f</string>
+    <string name="bar_text_percent_value">%1$d%</string>
 </resources>

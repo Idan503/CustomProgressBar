@@ -9,16 +9,54 @@
 
     <com.idankorenisraeli.customprogressbar.CustomProgressBar
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         app:barCornerRadius="20.0"
         app:value="0.65"
         app:textTitle="hey123"
         app:textGravity="center"
         app:textColor="@color/white"
-        app:textType="decimal"
+        app:textType="percentage"
         app:barPadding="5dp"
-        app:textPadding="8dp"
+        app:textPadding="3dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/main_CPB_example_bar"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_CPB_example_bar"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        >
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="@string/increase_example"
+            android:layout_margin="20dp"
+            android:id="@+id/main_BTN_increase"
+            style="?buttonStyle"
+            />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="@string/decrease_example"
+            android:layout_margin="20dp"
+            android:id="@+id/main_BTN_decrease"
+            style="?buttonStyle"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+
 
 
 </RelativeLayout>

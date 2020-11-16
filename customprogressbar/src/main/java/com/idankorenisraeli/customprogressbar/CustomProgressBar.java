@@ -6,9 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +19,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+
+import com.idankorenisraeli.customprogressbar.callbacks.OnEmptyListener;
+import com.idankorenisraeli.customprogressbar.callbacks.OnFullListener;
+import com.idankorenisraeli.customprogressbar.enums.ColorType;
+import com.idankorenisraeli.customprogressbar.enums.TextGravity;
+import com.idankorenisraeli.customprogressbar.enums.TextType;
 
 import java.text.DecimalFormat;
 
@@ -60,6 +64,9 @@ public class CustomProgressBar extends FrameLayout {
     private final static int DEFAULT_COLOR = Color.WHITE; // Will be used when user did not apply an attribute
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##"); // format of bar value display
     private final static String TAG = "CustomProgressBar";
+
+    private OnFullListener onFull = null;
+    private OnEmptyListener onEmpty = null;
 
 
 
@@ -413,6 +420,12 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setValue(float newValue) {
         this.value = Math.max(0,Math.min(1,newValue)); // Bar value is between 0 and 1
+
+        if(value==1 && onFull!=null)
+            onFull.onBarFull();
+        if(value==0 && onEmpty!=null)
+            onEmpty.onBarEmpty();
+
         invalidate();
     }
 
@@ -581,6 +594,31 @@ public class CustomProgressBar extends FrameLayout {
         invalidate();
     }
 
+    public int getColorStatic() {
+        return colorStatic;
+    }
+
+    public void setColorStatic(int colorStatic) {
+        this.colorStatic = colorStatic;
+        invalidate();
+    }
+
+    public OnFullListener getOnFull() {
+        return onFull;
+    }
+
+    public void setOnFull(OnFullListener onFull) {
+        this.onFull = onFull;
+    }
+
+    public OnEmptyListener getOnEmpty() {
+        return onEmpty;
+    }
+
+    public void setOnEmpty(OnEmptyListener onEmpty) {
+        this.onEmpty = onEmpty;
+    }
+
     //endregion
 
 
@@ -590,7 +628,6 @@ public class CustomProgressBar extends FrameLayout {
      */
     public void increase(float by){
         setValue(value + by);
-        invalidate();
     }
 
     /**
@@ -602,7 +639,6 @@ public class CustomProgressBar extends FrameLayout {
         float oldValue = value;
         setValue(oldValue+by);
         animateBar(oldValue, value,duration);
-        invalidate();
     }
 
 
@@ -612,7 +648,6 @@ public class CustomProgressBar extends FrameLayout {
      */
     public void decrease(float by){
         setValue(value-by);
-        invalidate();
     }
 
     /**
@@ -624,7 +659,6 @@ public class CustomProgressBar extends FrameLayout {
         float oldValue = value;
         setValue(oldValue-by);
         animateBar(oldValue, value,duration);
-        invalidate();
     }
 
 
@@ -637,7 +671,6 @@ public class CustomProgressBar extends FrameLayout {
         float oldValue = value;
         setValue(newValue);
         animateBar(oldValue, newValue,duration);
-        invalidate();
     }
 
 
@@ -660,7 +693,5 @@ public class CustomProgressBar extends FrameLayout {
         });
         animator.start();
     }
-
-
 
 }

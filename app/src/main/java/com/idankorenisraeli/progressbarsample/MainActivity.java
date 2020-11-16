@@ -4,19 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.idankorenisraeli.customprogressbar.ColorType;
+import com.idankorenisraeli.customprogressbar.enums.ColorType;
 import com.idankorenisraeli.customprogressbar.CustomProgressBar;
-import com.idankorenisraeli.customprogressbar.TextGravity;
-import com.idankorenisraeli.customprogressbar.TextType;
+import com.idankorenisraeli.customprogressbar.enums.TextGravity;
+import com.idankorenisraeli.customprogressbar.enums.TextType;
 
 public class MainActivity extends AppCompatActivity {
 

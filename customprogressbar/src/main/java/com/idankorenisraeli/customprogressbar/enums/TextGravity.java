@@ -1,4 +1,4 @@
-package com.idankorenisraeli.customprogressbar;
+package com.idankorenisraeli.customprogressbar.enums;
 
 
 /**

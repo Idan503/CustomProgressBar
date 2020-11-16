@@ -1,4 +1,4 @@
-package com.idankorenisraeli.customprogressbar;
+package com.idankorenisraeli.customprogressbar.enums;
 
 /**
  * The text of the custom bar can either show data about current bar progression

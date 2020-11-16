@@ -1,4 +1,4 @@
-package com.idankorenisraeli.customprogressbar;
+package com.idankorenisraeli.customprogressbar.enums;
 
 public enum ColorType {
     SINGLE_STATIC, // A Single color that doesn't change, applied by staticColor attribute

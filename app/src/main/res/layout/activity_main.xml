@@ -19,10 +19,12 @@
         app:textType="percentage"
         app:barPadding="5dp"
         app:textPadding="3dp"
+        app:textPaddingStart="20dp"
+        app:textPaddingEnd="20dp"
 
         app:colorStatic="@color/dark_blue"
         app:colorStart="@color/red"
-        app:colorCenter="@color/yellow"
+        app:colorCenter="@color/blue"
         app:colorEnd="@color/green"
         app:colorType="single_static"
 

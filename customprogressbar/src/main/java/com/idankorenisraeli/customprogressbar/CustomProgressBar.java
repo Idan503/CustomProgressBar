@@ -413,6 +413,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setValue(float newValue) {
         this.value = Math.max(0,Math.min(1,newValue)); // Bar value is between 0 and 1
+        invalidate();
     }
 
     public float getCornerRadius() {
@@ -421,6 +422,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setCornerRadius(float cornerRadius) {
         this.cornerRadius = cornerRadius;
+        invalidate();
     }
 
     public int getBarPadding() {
@@ -429,6 +431,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setBarPadding(int barPadding) {
         this.barPadding = barPadding;
+        invalidate();
     }
 
     public int getBackgroundColor() {
@@ -437,6 +440,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
+        invalidate();
     }
 
     public int getColorStart() {
@@ -445,6 +449,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setColorStart(int colorStart) {
         this.colorStart = colorStart;
+        invalidate();
     }
 
     public int getColorEnd() {
@@ -453,6 +458,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setColorEnd(int colorEnd) {
         this.colorEnd = colorEnd;
+        invalidate();
     }
 
     public int getColorCenter() {
@@ -461,6 +467,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setColorCenter(int colorCenter) {
         this.colorCenter = colorCenter;
+        invalidate();
     }
 
     public String getTextTitle() {
@@ -469,6 +476,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextTitle(String textTitle) {
         this.textTitle = textTitle;
+        invalidate();
     }
 
     public TextGravity getTextGravity() {
@@ -504,6 +512,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+        invalidate();
     }
 
     public CardView getBackgroundCard() {
@@ -512,31 +521,11 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setBackgroundCard(CardView backgroundCard) {
         this.backgroundCard = backgroundCard;
+        invalidate();
     }
 
-    public CardView getForegroundCard() {
-        return foregroundCard;
-    }
 
-    public void setForegroundCard(CardView foregroundCard) {
-        this.foregroundCard = foregroundCard;
-    }
 
-    public LinearLayout getForegroundHolder() {
-        return foregroundHolder;
-    }
-
-    public void setForegroundHolder(LinearLayout foregroundHolder) {
-        this.foregroundHolder = foregroundHolder;
-    }
-
-    public TextView getText() {
-        return text;
-    }
-
-    public void setText(TextView text) {
-        this.text = text;
-    }
 
     public boolean isTextEnabled() {
         return textEnabled;
@@ -544,6 +533,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextEnabled(boolean textEnabled) {
         this.textEnabled = textEnabled;
+        invalidate();
     }
 
     public int getTextPadding() {
@@ -552,6 +542,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextPadding(int textPadding) {
         this.textPadding = textPadding;
+        invalidate();
     }
 
     public int getTextPaddingLeft() {
@@ -560,6 +551,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextPaddingLeft(int textPaddingLeft) {
         this.textPaddingLeft = textPaddingLeft;
+        invalidate();
     }
 
     public int getTextPaddingStart() {
@@ -568,6 +560,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextPaddingStart(int textPaddingStart) {
         this.textPaddingStart = textPaddingStart;
+        invalidate();
     }
 
     public int getTextPaddingRight() {
@@ -576,6 +569,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextPaddingRight(int textPaddingRight) {
         this.textPaddingRight = textPaddingRight;
+        invalidate();
     }
 
     public int getTextPaddingEnd() {
@@ -584,6 +578,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextPaddingEnd(int textPaddingEnd) {
         this.textPaddingEnd = textPaddingEnd;
+        invalidate();
     }
 
     //endregion

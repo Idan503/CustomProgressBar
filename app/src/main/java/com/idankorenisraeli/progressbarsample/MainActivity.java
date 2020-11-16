@@ -2,13 +2,17 @@ package com.idankorenisraeli.progressbarsample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.idankorenisraeli.customprogressbar.ColorType;
 import com.idankorenisraeli.customprogressbar.CustomProgressBar;
 import com.idankorenisraeli.customprogressbar.TextGravity;
@@ -83,7 +87,24 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 if(checkedId == R.id.main_RTB_custom){
-                    //tbd
+                    MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(MainActivity.this);
+                    EditText titleEditText = new EditText(MainActivity.this);
+                    dialogBuilder.setTitle("Set a Custom Title");
+                    titleEditText.setPadding(15,15,15,15);
+                    titleEditText.setHint("Custom Static Title");
+                    dialogBuilder.setView(titleEditText);
+                    dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(!titleEditText.getText().toString().equals("")) {
+                                customProgressBar.setTextType(TextType.STATIC);
+                                customProgressBar.setTextTitle(titleEditText.getText().toString());
+                            }
+                        };
+                    });
+                    dialogBuilder.setNegativeButton("Cancel", null);
+                    dialogBuilder.show();
+
                 }
 
             }

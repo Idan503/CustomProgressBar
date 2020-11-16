@@ -1,5 +1,16 @@
 # CustomProgressBar
-A more customizable progress bar view for Android.
+A simple and easy to use customizable progress bar view for Android.
+#### Main Features:  
+- Custom Title
+    - Text that can be on left, center, or right side of the bar
+    - Title can show either progress decimal value, percentage or a static text 
+- Bar Colors
+    - Static bar and background color  
+    - Gradient bar of up to 3 colors
+    - Dynamic color that changes gradiently matching bar value
+- Value Change Animation
+    - Option to apply smooth animation transition for a bar value change easily  
+
 
 ## Screenshots
 

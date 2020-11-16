@@ -10,19 +10,23 @@
     <com.idankorenisraeli.customprogressbar.CustomProgressBar
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        app:barCornerRadius="20.0"
+        app:barCornerRadius="40.0"
         app:value="0.5"
-        app:textTitle="hey123"
+
+        app:textTitle="Hello Bar"
         app:textGravity="center"
         app:textColor="@color/white"
         app:textType="percentage"
-
         app:barPadding="5dp"
         app:textPadding="3dp"
-        app:colorStart="@color/black"
-        app:colorCenter="@android:color/holo_red_light"
-        app:colorEnd="@color/white"
-        app:colorType="gradient"
+
+        app:colorStatic="@color/dark_blue"
+        app:colorStart="@color/red"
+        app:colorCenter="@color/yellow"
+        app:colorEnd="@color/green"
+        app:colorType="single_dynamic"
+
+
         android:layout_marginTop="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -95,11 +99,12 @@
 
 
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_below="@id/main_LAY_buttons_2"
+    android:id="@+id/main_LAY_text_settings"
     android:gravity="center"
     >
 
@@ -107,9 +112,9 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:id="@+id/main_LAY_buttons_text_type"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="vertical"
-            android:layout_margin="20dp"
+            android:layout_marginEnd="10dp"
             >
 
             <TextView
@@ -122,19 +127,34 @@
                 android:padding="5dp"
                 />
 
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="25dp"
                 android:text="@string/text_type_percentage"
                 android:id="@+id/main_RTB_percentage"
+                android:checked="true"
                 />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="25dp"
                 android:text="@string/text_type_decimal"
                 android:id="@+id/main_RTB_decimal"
                 />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="@string/text_type_custom"
+                android:id="@+id/main_RTB_custom"
+                />
+
+            </RadioGroup>
 
 
         </LinearLayout>
@@ -145,7 +165,7 @@
             android:id="@+id/main_LAY_buttons_text_gravity"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:layout_margin="20dp"
+            android:layout_marginStart="10dp"
             >
 
             <TextView
@@ -158,32 +178,101 @@
                 android:padding="5dp"
                 />
 
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="25dp"
                 android:text="@string/text_gravity_start"
                 android:id="@+id/main_RTB_start"
                 />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="25dp"
                 android:text="@string/text_gravity_center"
                 android:id="@+id/main_RTB_center"
+                android:checked="true"
                 />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="25dp"
                 android:text="@string/text_gravity_end"
                 android:id="@+id/main_RTB_end"
                 />
+
+            </RadioGroup>
 
         </LinearLayout>
 
 </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_LAY_color_settings"
+        android:layout_below="@id/main_LAY_text_settings"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_LAY_buttons_color_type"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginEnd="10dp"
+            >
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:id="@+id/main_LBL_color_type_title"
+                android:text="@string/color_type_title"
+                android:gravity="center"
+                android:autoSizeTextType="uniform"
+                android:padding="5dp"
+                />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/color_type_single_static"
+                    android:id="@+id/main_RTB_single_static"
+                    android:checked="true"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/color_type_single_dynamic"
+                    android:id="@+id/main_RTB_single_dynamic"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/color_type_gradient"
+                    android:id="@+id/main_RTB_gradient"
+                    />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

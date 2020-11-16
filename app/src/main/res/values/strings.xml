@@ -8,11 +8,17 @@
     <string name="text_type_title">Text Type</string>
     <string name="text_type_percentage">Percentage</string>
     <string name="text_type_decimal">Decimal</string>
+    <string name="text_type_custom">Custom</string>
 
 
     <string name="text_gravity_title">Text Gravity</string>
     <string name="text_gravity_start">Start</string>
     <string name="text_gravity_end">End</string>
     <string name="text_gravity_center">Center</string>
+
+    <string name="color_type_title">Color Type</string>
+    <string name="color_type_single_static">Single Static</string>
+    <string name="color_type_single_dynamic">Single Dynamic</string>
+    <string name="color_type_gradient">Gradient</string>
 
 </resources>

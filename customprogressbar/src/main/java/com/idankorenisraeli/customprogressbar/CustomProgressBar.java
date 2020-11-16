@@ -294,18 +294,19 @@ public class CustomProgressBar extends FrameLayout {
         Color startColor = Color.valueOf(colorStart);
         Color endColor = Color.valueOf(colorEnd);
         Color centerColor = Color.valueOf(colorCenter);
+        Log.i("pttt", centerColor.toString() + "_" + centerColor.red() + " | " +  centerColor.green()+ " | " +centerColor.blue());
         if(centerColorExists){
             if(value>=0.5){
-                // between center and end
-                r = centerColor.red() + value * (endColor.red() - centerColor.red());
-                g = centerColor.green() + value * (endColor.green() - centerColor.green());
-                b = centerColor.blue() + value * (endColor.blue() - centerColor.blue());
+                // between center and end - value is in (0.5,1), converted to range (0,1)
+                r = centerColor.red() + (value-0.5f)*2 * (endColor.red() - centerColor.red());
+                g = centerColor.green() + (value-0.5f)*2 * (endColor.green() - centerColor.green());
+                b = centerColor.blue() + (value-0.5f)*2 * (endColor.blue() - centerColor.blue());
             }
             else{
-                // between start and center
-                r = startColor.red() + value * (centerColor.red() - startColor.red());
-                g = startColor.green() + value * (centerColor.green() - startColor.green());
-                b = startColor.blue() + value * (centerColor.blue() - startColor.blue());
+                // between start and center - value is in (0,0.5), converted to range (0,1)
+                r = startColor.red() + (value*2) * (centerColor.red() - startColor.red());
+                g = startColor.green() + (value*2) * (centerColor.green() - startColor.green());
+                b = startColor.blue() + (value*2) * (centerColor.blue() - startColor.blue());
             }
         }
         else

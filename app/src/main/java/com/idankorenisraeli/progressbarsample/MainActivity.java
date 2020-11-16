@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.idankorenisraeli.customprogressbar.callbacks.OnEmptyListener;
+import com.idankorenisraeli.customprogressbar.callbacks.OnFullListener;
 import com.idankorenisraeli.customprogressbar.enums.ColorType;
 import com.idankorenisraeli.customprogressbar.CustomProgressBar;
 import com.idankorenisraeli.customprogressbar.enums.TextGravity;
@@ -32,12 +34,29 @@ public class MainActivity extends AppCompatActivity {
 
         findViews();
 
+        setBarListeners();
         setValueButtonsListeners();
         setOptionsButtonsListeners();
 
 
 
 
+    }
+
+    private void setBarListeners(){
+        customProgressBar.setOnEmptyListener(new OnEmptyListener() {
+            @Override
+            public void onBarEmpty() {
+                CommonUtils.getInstance().showToast("Bar is empty");
+            }
+        });
+
+        customProgressBar.setOnFullListener(new OnFullListener() {
+            @Override
+            public void onBarFull() {
+                CommonUtils.getInstance().showToast("Bar is full");
+            }
+        });
     }
 
     private void setValueButtonsListeners(){

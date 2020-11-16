@@ -65,8 +65,8 @@ public class CustomProgressBar extends FrameLayout {
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##"); // format of bar value display
     private final static String TAG = "CustomProgressBar";
 
-    private OnFullListener onFull = null;
-    private OnEmptyListener onEmpty = null;
+    private OnFullListener onFullListener = null;
+    private OnEmptyListener onEmptyListener = null;
 
 
 
@@ -421,10 +421,10 @@ public class CustomProgressBar extends FrameLayout {
     public void setValue(float newValue) {
         this.value = Math.max(0,Math.min(1,newValue)); // Bar value is between 0 and 1
 
-        if(value==1 && onFull!=null)
-            onFull.onBarFull();
-        if(value==0 && onEmpty!=null)
-            onEmpty.onBarEmpty();
+        if(value==1 && onFullListener !=null)
+            onFullListener.onBarFull();
+        if(value==0 && onEmptyListener !=null)
+            onEmptyListener.onBarEmpty();
 
         invalidate();
     }
@@ -603,20 +603,20 @@ public class CustomProgressBar extends FrameLayout {
         invalidate();
     }
 
-    public OnFullListener getOnFull() {
-        return onFull;
+    public OnFullListener getOnFullListener() {
+        return onFullListener;
     }
 
-    public void setOnFull(OnFullListener onFull) {
-        this.onFull = onFull;
+    public void setOnFullListener(OnFullListener onFullListener) {
+        this.onFullListener = onFullListener;
     }
 
-    public OnEmptyListener getOnEmpty() {
-        return onEmpty;
+    public OnEmptyListener getOnEmptyListener() {
+        return onEmptyListener;
     }
 
-    public void setOnEmpty(OnEmptyListener onEmpty) {
-        this.onEmpty = onEmpty;
+    public void setOnEmptyListener(OnEmptyListener onEmptyListener) {
+        this.onEmptyListener = onEmptyListener;
     }
 
     //endregion

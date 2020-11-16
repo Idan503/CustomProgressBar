@@ -104,8 +104,8 @@ public class CustomProgressBar extends FrameLayout {
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomProgressBar, 0, 0);
         try {
-            cornerRadius = array.getFloat(R.styleable.CustomProgressBar_barCornerRadius, 10);
-            barPadding = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barPadding, 5);
+            cornerRadius = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barCornerRadius, 5);
+            barPadding = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barPadding, 4);
             backgroundColor = array.getColor(R.styleable.CustomProgressBar_barBackgroundColor, Color.GRAY);
             value = array.getFloat(R.styleable.CustomProgressBar_value, 0);
 

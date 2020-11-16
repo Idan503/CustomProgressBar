@@ -47,7 +47,7 @@
 
 
         <!-- BAR APPEARANCE -->
-        <attr name="barCornerRadius" format="float"/>
+        <attr name="barCornerRadius" format="dimension"/>
         <attr name="barPadding" format="dimension"/>
         <attr name="value" format="float"/>
     </declare-styleable>

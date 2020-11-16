@@ -14,30 +14,30 @@ A simple and easy to use customizable progress bar view for Android.
 
 
 ## Screenshots
-<p float="top" align="middle" padding="5">
-  <img src="/screenshots/CustomProgressBar1.png?raw=true" width="150" />
-  <img src="/screenshots/CustomProgressBar2.png?raw=true" width="150" />
-  <img src="/screenshots/CustomProgressBar3.png?raw=true" width="150" />
+<p float="left" align="middle" padding="5">
+  <img src="/screenshots/CustomProgressBar1.png?raw=true" width="180" />
+  <img src="/screenshots/CustomProgressBar2.png?raw=true" width="180" />
+  <img src="/screenshots/CustomProgressBar3.png?raw=true" width="180" />
 </p>
 
 ## Setup
 ##### Step 1
 Add this to build.gradle of your project
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
 ##### Step 2
 Add this dependency to your build.gradle of your app
 ```
-	dependencies {
-	        implementation 'com.github.Idan503:CustomProgressBar:<version>
-	}
+dependencies {
+		implementation 'com.github.Idan503:CustomProgressBar:<version>'
+}
 ```	
 
 ## Usage

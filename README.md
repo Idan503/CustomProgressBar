@@ -36,12 +36,33 @@ allprojects {
 Add this dependency to your build.gradle of your app
 ```
 dependencies {
-		implementation 'com.github.Idan503:CustomProgressBar:<version>'
+	implementation 'com.github.Idan503:CustomProgressBar:<version>'
 }
 ```	
 
 ## Usage
+XML implementation example:
+```
+<com.idankorenisraeli.customprogressbar.CustomProgressBar
+	android:layout_width="match_parent"
+	android:layout_height="50dp"
 
+	app:barPadding="5dp"
+	app:barCornerRadius="8dp"
+
+	app:barBackgroundColor="@color/dark_gray"
+	app:colorType="single_static"
+	app:colorStatic="@color/white"
+
+	app:textType="custom_static"
+	app:textTitle="Hello World"
+	app:textPadding="5dp"
+	app:textGravity="center"
+	app:textColor="@color/light_blue"
+	
+	app:value="0.35"
+/>
+```
 
 ## License
 

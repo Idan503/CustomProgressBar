@@ -24,7 +24,7 @@
         app:colorStart="@color/red"
         app:colorCenter="@color/yellow"
         app:colorEnd="@color/green"
-        app:colorType="single_dynamic"
+        app:colorType="single_static"
 
 
         android:layout_marginTop="40dp"
@@ -130,29 +130,30 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/main_RBG_text_type"
                 >
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:text="@string/text_type_percentage"
-                android:id="@+id/main_RTB_percentage"
-                android:checked="true"
-                />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/text_type_percentage"
+                    android:id="@+id/main_RTB_percentage"
+                    android:checked="true"
+                    />
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:text="@string/text_type_decimal"
-                android:id="@+id/main_RTB_decimal"
-                />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/text_type_decimal"
+                    android:id="@+id/main_RTB_decimal"
+                    />
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:text="@string/text_type_custom"
-                android:id="@+id/main_RTB_custom"
-                />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/text_type_custom"
+                    android:id="@+id/main_RTB_custom"
+                    />
 
             </RadioGroup>
 
@@ -181,6 +182,7 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/main_RBG_text_gravity"
                 >
             <RadioButton
                 android:layout_width="wrap_content"
@@ -242,6 +244,7 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/main_RBG_color_type"
                 >
 
                 <RadioButton

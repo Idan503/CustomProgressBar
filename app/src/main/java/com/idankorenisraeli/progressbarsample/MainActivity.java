@@ -6,14 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.idankorenisraeli.customprogressbar.ColorType;
 import com.idankorenisraeli.customprogressbar.CustomProgressBar;
+import com.idankorenisraeli.customprogressbar.TextGravity;
+import com.idankorenisraeli.customprogressbar.TextType;
 
 public class MainActivity extends AppCompatActivity {
 
     CustomProgressBar customProgressBar;
     Button increaseBtn, decreaseBtn;
     Button increaseAnimBtn, decreaseAnimBtn;
+
+    RadioGroup textTypeGroup, textGravityGroup, colorTypeGroup;
 
     private static final int ANIMATION_DURATION = 250;
 
@@ -24,8 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
         findViews();
 
+        setValueButtonsListeners();
+        setOptionsButtonsListeners();
 
 
+
+
+    }
+
+    private void setValueButtonsListeners(){
         increaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +67,62 @@ public class MainActivity extends AppCompatActivity {
                 customProgressBar.decreaseAnimated(0.1f,ANIMATION_DURATION);
             }
         });
+    }
 
+    private void setOptionsButtonsListeners(){
+        textTypeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if(checkedId == R.id.main_RTB_percentage){
+                    customProgressBar.setTextType(TextType.PERCENTAGE);
+                }
+                else
+                if(checkedId == R.id.main_RTB_decimal){
+                    customProgressBar.setTextType(TextType.DECIMAL);
+                }
+                else
+                if(checkedId == R.id.main_RTB_custom){
+                    //tbd
+                }
+
+            }
+        });
+
+
+        textGravityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.main_RTB_start){
+                    customProgressBar.setTextGravity(TextGravity.START);
+                }
+                else
+                if(checkedId == R.id.main_RTB_center){
+                    customProgressBar.setTextGravity(TextGravity.CENTER);
+                }
+                else
+                if(checkedId == R.id.main_RTB_end){
+                    customProgressBar.setTextGravity(TextGravity.END);
+                }
+            }
+        });
+
+        colorTypeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.main_RTB_single_static){
+                    customProgressBar.setColorType(ColorType.SINGLE_STATIC);
+                }
+                else
+                if(checkedId == R.id.main_RTB_single_dynamic){
+                    customProgressBar.setColorType(ColorType.SINGLE_DYNAMIC);
+                }
+                else
+                if(checkedId == R.id.main_RTB_gradient){
+                    customProgressBar.setColorType(ColorType.GRADIENT);
+                }
+            }
+        });
     }
 
 
@@ -63,5 +132,9 @@ public class MainActivity extends AppCompatActivity {
         decreaseBtn = findViewById(R.id.main_BTN_decrease);
         increaseAnimBtn = findViewById(R.id.main_BTN_increase_animated);
         decreaseAnimBtn = findViewById(R.id.main_BTN_decrease_animated);
+        textGravityGroup = findViewById(R.id.main_RBG_text_gravity);
+        textTypeGroup = findViewById(R.id.main_RBG_text_type);
+        colorTypeGroup = findViewById(R.id.main_RBG_color_type);
+
     }
 }

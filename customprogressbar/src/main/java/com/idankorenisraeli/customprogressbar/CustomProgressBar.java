@@ -6,7 +6,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -178,7 +180,6 @@ public class CustomProgressBar extends FrameLayout {
      * Text is always vertically aligned to center
      * @param context Current context
      */
-    @SuppressLint("RtlHardcoded")
     private void initText(Context context) {
         if(!textEnabled)
             return;
@@ -195,7 +196,7 @@ public class CustomProgressBar extends FrameLayout {
             params.setMarginEnd(textPaddingEnd);
         }
         else {
-            if(textPaddingLeft !=0 || textPaddingEnd != 0)
+            if(textPaddingLeft !=0 || textPaddingRight != 0)
                 params.setMargins(textPaddingLeft, textPadding, textPaddingRight, textPadding);
         }
 
@@ -205,25 +206,6 @@ public class CustomProgressBar extends FrameLayout {
         text.setLines(1);
         text.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
-        switch (textGravity){
-            case START:
-                text.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-                break;
-            case END:
-                text.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
-                break;
-            case LEFT:
-                text.setGravity(Gravity.LEFT  | Gravity.CENTER_VERTICAL);
-                break;
-            case RIGHT:
-                text.setGravity(Gravity.RIGHT  | Gravity.CENTER_VERTICAL);
-            case STICK_BAR:
-                //tbd
-                break;
-
-            default:
-                text.setGravity(Gravity.CENTER  | Gravity.CENTER_VERTICAL);
-        }
 
 
         updateText();
@@ -266,22 +248,28 @@ public class CustomProgressBar extends FrameLayout {
      * Using colorStart, colorCenter (if applied), and colorEnd attributes
      * to generate the gradient background of the bar
      * @return GradientDrawable background with the applied radius.
+     * @param colors Colors of the background, multiple for gradient.
      */
-    private GradientDrawable createGradientBackground() {
-        GradientDrawable gradient;
-        if(colorCenter!=-1) {
-            gradient = new GradientDrawable(
+    private GradientDrawable createBarBackground(int... colors) {
+        if(colors.length==0)
+            return null;
+        GradientDrawable background; // Might use another type of drawable here
+        if(colors.length==1){
+            background = new GradientDrawable(
                     GradientDrawable.Orientation.LEFT_RIGHT,
-                    new int[]{colorStart, colorCenter, colorEnd});
+                    new int[]{colors[0], colors[0]});
         }
-        else
-        {
-            gradient = new GradientDrawable(
+        else{
+            // 2+ parameters
+            background = new GradientDrawable(
                     GradientDrawable.Orientation.LEFT_RIGHT,
-                    new int[]{colorStart, colorEnd});
+                    colors);
         }
-        return gradient;
+
+        background.setCornerRadius(cornerRadius);
+        return background;
     }
+
 
 
     /**
@@ -294,7 +282,6 @@ public class CustomProgressBar extends FrameLayout {
         Color startColor = Color.valueOf(colorStart);
         Color endColor = Color.valueOf(colorEnd);
         Color centerColor = Color.valueOf(colorCenter);
-        Log.i("pttt", centerColor.toString() + "_" + centerColor.red() + " | " +  centerColor.green()+ " | " +centerColor.blue());
         if(centerColorExists){
             if(value>=0.5){
                 // between center and end - value is in (0.5,1), converted to range (0,1)
@@ -323,23 +310,23 @@ public class CustomProgressBar extends FrameLayout {
 
 
     private void updateColor(){
+        boolean centerColorApplied = (colorCenter != -1);
+
         switch (colorType){
             case SINGLE_STATIC:
                 validateColorAttrs(false);
-                foregroundCard.setCardBackgroundColor(colorStatic);
-                foregroundCard.setRadius(cornerRadius);
+                foregroundCard.setBackground(createBarBackground(colorStatic));
                 break;
             case SINGLE_DYNAMIC:
-                boolean centerColorApplied = (colorCenter != 0);
                 validateColorAttrs(true);
-                foregroundCard.setCardBackgroundColor(getSingleDynamicColor(centerColorApplied));
-                foregroundCard.setRadius(cornerRadius);
+                foregroundCard.setBackground(createBarBackground(getSingleDynamicColor(centerColorApplied)));
                 break;
             case GRADIENT:
                 validateColorAttrs(true);
-                GradientDrawable backgroundGradient = createGradientBackground();
-                backgroundGradient.setCornerRadius(cornerRadius);
-                foregroundCard.setBackground(backgroundGradient);
+                if(centerColorApplied)
+                    foregroundCard.setBackground(createBarBackground(colorStart,colorCenter,colorEnd));
+                else
+                    foregroundCard.setBackground(createBarBackground(colorStart, colorEnd));
                 break;
         }
 
@@ -353,8 +340,7 @@ public class CustomProgressBar extends FrameLayout {
         super.invalidate();
         updateValue();
         updateText();
-        if(colorType==ColorType.SINGLE_DYNAMIC)
-            updateColor(); //Color is dynamic so we update its draw
+        updateColor();
     }
 
     /**
@@ -373,9 +359,10 @@ public class CustomProgressBar extends FrameLayout {
      * Setting the inner text to show the current value of the bar
      * In case of text type of decimal / percentage values
      */
+    @SuppressLint("RtlHardcoded")
     private void updateText()
     {
-        if(!textEnabled || textType == TextType.STATIC)
+        if(!textEnabled)
             return;
 
         float roundedValue;
@@ -395,6 +382,26 @@ public class CustomProgressBar extends FrameLayout {
             default:
                 text.setText(textTitle); //setting the custom text given
                 break;
+        }
+
+        switch (textGravity){
+            case START:
+                text.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+                break;
+            case END:
+                text.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+                break;
+            case LEFT:
+                text.setGravity(Gravity.LEFT  | Gravity.CENTER_VERTICAL);
+                break;
+            case RIGHT:
+                text.setGravity(Gravity.RIGHT  | Gravity.CENTER_VERTICAL);
+            case STICK_BAR:
+                //tbd
+                break;
+
+            default:
+                text.setGravity(Gravity.CENTER  | Gravity.CENTER_VERTICAL);
         }
     }
 
@@ -470,6 +477,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextGravity(TextGravity textGravity) {
         this.textGravity = textGravity;
+        invalidate();
     }
 
     public TextType getTextType() {
@@ -478,6 +486,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextType(TextType textType) {
         this.textType = textType;
+        invalidate();
     }
 
     public ColorType getColorType() {
@@ -486,6 +495,7 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setColorType(ColorType colorType) {
         this.colorType = colorType;
+        invalidate();
     }
 
     public int getTextColor() {

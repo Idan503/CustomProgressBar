@@ -4,12 +4,12 @@
 A simple and easy to use customizable progress bar view for Android.
 #### Main Features:  
 - Custom Title
-    - Text that can be on left, center, or right side of the bar
-    - Title can show either progress decimal value, percentage or a static text 
+    - Text that can be on the left, center, or right side of the bar
+    - Title can show either progress decimal value, percentage, or a static text 
 - Bar Colors
     - Static bar and background color  
     - Gradient bar of up to 3 colors
-    - Dynamic color that changes gradiently matching bar value
+    - Dynamic color that changes as a gradient, matching the bar value
 - Value Change Animation
     - Option to apply smooth animation transition for a bar value change easily  
 
@@ -45,7 +45,7 @@ dependencies {
 ```	
 
 ## Usage
-Here is an example of implmentation in an activity XML file:
+Here is an example of implementation in an XML file:
 ```
 <com.idankorenisraeli.customprogressbar.CustomProgressBar
     android:layout_width="match_parent"
@@ -68,10 +68,37 @@ Here is an example of implmentation in an activity XML file:
     app:value="0.8"
 />
 ```
+
+The following snippet will get you the same result programmatically:
+```
+	CustomProgressBar cpb = new CustomProgressBar(this);
+	//Layout
+	LinearLayout.LayoutParams params = 
+		new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80);
+	cpb.setLayoutParams(params);
+	cpb.setBarPadding(5);
+	cpb.setCornerRadius(50);
+
+	// Color
+	cpb.setBackgroundColor(getColor(R.color.dark_gray));
+	cpb.setColorStart(getColor(R.color.light_gray));
+	cpb.setColorEnd(getColor(R.color.lighter_gray));
+	cpb.setColorType(ColorType.GRADIENT);
+
+	//Text
+	cpb.setTextType(TextType.STATIC);
+	cpb.setTextTitle("Hello World");
+	cpb.setTextPadding(5);
+	cpb.setTextGravity(TextGravity.CENTER);
+	cpb.setTextColor(getColor(R.color.text_blue));
+	cpb.setTextEnabled(true);
+	
+	cpb.setValue(0.8f);
+```
 Result would be:  
 <img src="/screenshots/CustomProgressBar4.png" width="450" height="75"></br>
 ## View Attributes
-Those attributes can be changed both via XML and programmably.   
+Those attributes can be changed both via XML and programmatically.   
 `value` - Bar current value between 0.00 (empty) and 1.00 (full).  
 `barBackgroundColor` - Single color of the background view that holds the bar.  
 `barCornerRadius` - Rounded corners of both the foreground and the background.  

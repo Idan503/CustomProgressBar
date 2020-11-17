@@ -76,17 +76,17 @@ Those attributes can be changed both via XML and programmably.
 `barBackgroundColor` - Single color of the background view that holds the bar.  
 `barCornerRadius` - Rounded corners of both the foreground and the background.  
 `barPadding` - Padding between the background view and the inner bar.  
-
-`colorType`  
-- `single_static` - A single value color.  
-- `single_dynamic` - Depending on `value`.  
-- `gradient` - A Static gradient up to 3 colors.  
+ 
 
 `textTitle`  - Bar title as an inner text (for `custom_static` type only).  
 `textPadding` - Padding between the edge/s of the view and the title.  
 `textEnabled` - Title can be either shown / hidden.  
 `textGravity` - Title can be placed horizontally on the bar.  
 
+`colorType`  
+- `single_static` - A single value color.  
+- `single_dynamic` - Depending on `value`.  
+- `gradient` - A Static gradient up to 3 colors.  
 
 `textType`
 - `custom_static` - Text will show the string of `textTitle`. 

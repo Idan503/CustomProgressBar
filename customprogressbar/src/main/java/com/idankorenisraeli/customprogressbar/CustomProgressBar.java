@@ -100,6 +100,10 @@ public class CustomProgressBar extends FrameLayout {
      */
     private void obtainAttributes(Context context,@Nullable AttributeSet attrs){
         if(attrs==null) {
+            // No attributes given - default initialize
+            colorStart = -1;
+            colorCenter = -1;
+            colorEnd = -1;
             textType = TextType.STATIC;
             colorType = ColorType.SINGLE_STATIC;
             textGravity = TextGravity.CENTER;
@@ -193,8 +197,6 @@ public class CustomProgressBar extends FrameLayout {
      * @param context Current context
      */
     private void initText(Context context) {
-        if(!textEnabled)
-            return;
         text = new TextView(context);
         FrameLayout.LayoutParams params =
                 new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -233,24 +235,21 @@ public class CustomProgressBar extends FrameLayout {
 
     /**
      * Notifies to the user that he forgot to apply color attributes based on gradient/single mode.
-     * Setting the color to default if no attribute is applied
      * @param gradient - current validation is for gradient attributes or single color
      */
     private void validateColorAttrs(boolean gradient) {
         if(gradient){
             if(colorStart == -1){
                 Log.w(TAG, "colorStart attribute is not defined, although bar color type is gradient");
-                colorStart = DEFAULT_COLOR;
             }
             if(colorEnd == -1){
                 Log.w(TAG, "colorEnd attribute is not defined, although bar color type is gradient");
-                colorEnd = DEFAULT_COLOR;
             }
+            // NOTE: colorCenter can be not set, which makes its value to be -1, and the gradient will be 2 color only.
         }
         else{
             if(colorStatic==-1){
                 Log.w(TAG, "colorStatic attribute is not defined, although bar color type is static");
-                colorStatic = DEFAULT_COLOR;
             }
         }
     }
@@ -265,14 +264,14 @@ public class CustomProgressBar extends FrameLayout {
     private GradientDrawable createBarBackground(int... colors) {
         if(colors.length==0)
             return null;
-        GradientDrawable background; // Might use another type of drawable here
+        GradientDrawable background;
         if(colors.length==1){
             background = new GradientDrawable(
                     GradientDrawable.Orientation.LEFT_RIGHT,
                     new int[]{colors[0], colors[0]});
         }
         else{
-            // 2+ parameters
+            // 2+ parameters - regular gradient
             background = new GradientDrawable(
                     GradientDrawable.Orientation.LEFT_RIGHT,
                     colors);
@@ -287,33 +286,48 @@ public class CustomProgressBar extends FrameLayout {
     /**
      * Calculates which is the current bar color by gradient colors and current bar value
      * @return Current single dynamic color
-     * @param centerColorExists Applied a center color that makes a tricolor gradient bar
      */
-    private int getSingleDynamicColor(boolean centerColorExists){
-        float r,g,b;
-        Color startColor = Color.valueOf(colorStart);
-        Color endColor = Color.valueOf(colorEnd);
-        Color centerColor = Color.valueOf(colorCenter);
+    private int getSingleDynamicColor(){
+        float r,g,b; //result
+        Color start, center, end;
+        boolean centerColorExists = (colorCenter!=-1);
+
+        //Setting color to default if there is no color
+        if(colorStart==-1)
+            start = Color.valueOf(DEFAULT_COLOR);
+        else
+            start = Color.valueOf(colorStart);
+
+        if (colorCenter == -1)
+            center = Color.valueOf(DEFAULT_COLOR);
+        else
+            center = Color.valueOf(colorCenter);
+
+        if(colorEnd==-1)
+            end = Color.valueOf(DEFAULT_COLOR);
+        else
+            end = Color.valueOf(colorEnd);
+        
         if(centerColorExists){
             if(value>=0.5){
                 // between center and end - value is in (0.5,1), converted to range (0,1)
-                r = centerColor.red() + (value-0.5f)*2 * (endColor.red() - centerColor.red());
-                g = centerColor.green() + (value-0.5f)*2 * (endColor.green() - centerColor.green());
-                b = centerColor.blue() + (value-0.5f)*2 * (endColor.blue() - centerColor.blue());
+                r = center.red() + (value-0.5f)*2 * (end.red() - center.red());
+                g = center.green() + (value-0.5f)*2 * (end.green() - center.green());
+                b = center.blue() + (value-0.5f)*2 * (end.blue() - center.blue());
             }
             else{
                 // between start and center - value is in (0,0.5), converted to range (0,1)
-                r = startColor.red() + (value*2) * (centerColor.red() - startColor.red());
-                g = startColor.green() + (value*2) * (centerColor.green() - startColor.green());
-                b = startColor.blue() + (value*2) * (centerColor.blue() - startColor.blue());
+                r = start.red() + (value*2) * (center.red() - start.red());
+                g = start.green() + (value*2) * (center.green() - start.green());
+                b = start.blue() + (value*2) * (center.blue() - start.blue());
             }
         }
         else
         {
-            //between start and end (No center)
-            r = startColor.red() + value * (endColor.red() - startColor.red());
-            g = startColor.green() + value * (endColor.green() - startColor.green());
-            b = startColor.blue() + value * (endColor.blue() - startColor.blue());
+            //between start and end (No center color)
+            r = start.red() + value * (end.red() - start.red());
+            g = start.green() + value * (end.green() - start.green());
+            b = start.blue() + value * (end.blue() - start.blue());
         }
 
         // now r,g,b representing the single color of bar's value percentage in the gradient
@@ -322,8 +336,6 @@ public class CustomProgressBar extends FrameLayout {
 
 
     private void updateColor(){
-        boolean centerColorApplied = (colorCenter != -1);
-
         switch (colorType){
             case SINGLE_STATIC:
                 validateColorAttrs(false);
@@ -331,14 +343,18 @@ public class CustomProgressBar extends FrameLayout {
                 break;
             case SINGLE_DYNAMIC:
                 validateColorAttrs(true);
-                foregroundCard.setBackground(createBarBackground(getSingleDynamicColor(centerColorApplied)));
+                foregroundCard.setBackground(createBarBackground(getSingleDynamicColor()));
                 break;
             case GRADIENT:
                 validateColorAttrs(true);
-                if(centerColorApplied)
-                    foregroundCard.setBackground(createBarBackground(colorStart,colorCenter,colorEnd));
-                else
+                if(colorCenter!=-1) {
+                    // Center color applied, gradient includes 3 colors
+                    foregroundCard.setBackground(createBarBackground(colorStart, colorCenter, colorEnd));
+                }
+                else {
+                    // Only 2 colors applied
                     foregroundCard.setBackground(createBarBackground(colorStart, colorEnd));
+                }
                 break;
         }
 
@@ -374,8 +390,12 @@ public class CustomProgressBar extends FrameLayout {
     @SuppressLint("RtlHardcoded")
     private void updateText()
     {
-        if(!textEnabled)
-            return;
+        if(textEnabled) {
+            text.setVisibility(VISIBLE);
+            return; //Text will not be shown anyway
+        }
+        else
+            text.setVisibility(GONE);
 
         float roundedValue;
         switch (textType){
@@ -498,7 +518,11 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextTitle(String textTitle) {
         this.textTitle = textTitle;
-        invalidate();
+        if(!textEnabled)
+            Log.w(TAG, "A new title is set, although text is disabled\n" +
+                    "In order to show text, set 'textEnabled' attribute to true");
+        else
+            invalidate(); //Update the view to show the new text
     }
 
     public TextGravity getTextGravity() {
@@ -541,7 +565,7 @@ public class CustomProgressBar extends FrameLayout {
         return backgroundCard;
     }
 
-    public void setBackgroundCard(CardView backgroundCard) {
+    private void setBackgroundCard(CardView backgroundCard) {
         this.backgroundCard = backgroundCard;
         invalidate();
     }

@@ -104,8 +104,8 @@ public class CustomProgressBar extends FrameLayout {
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomProgressBar, 0, 0);
         try {
-            cornerRadius = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barCornerRadius, 5);
-            barPadding = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barPadding, 4);
+            cornerRadius = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barCornerRadius, 4);
+            barPadding = array.getDimensionPixelSize(R.styleable.CustomProgressBar_barPadding, 3);
             backgroundColor = array.getColor(R.styleable.CustomProgressBar_barBackgroundColor, Color.GRAY);
             value = array.getFloat(R.styleable.CustomProgressBar_value, 0);
 
@@ -418,6 +418,10 @@ public class CustomProgressBar extends FrameLayout {
         return value;
     }
 
+    /**
+     * Bar value is always between 0.00 and 1.00.
+     * @param newValue Value that the bar will be set to, in range [0,1].
+     */
     public void setValue(float newValue) {
         this.value = Math.max(0,Math.min(1,newValue)); // Bar value is between 0 and 1
 
@@ -607,6 +611,9 @@ public class CustomProgressBar extends FrameLayout {
         return onFullListener;
     }
 
+    /**
+     * @param onFullListener Callback for when bar reaches 1
+     */
     public void setOnFullListener(OnFullListener onFullListener) {
         this.onFullListener = onFullListener;
     }
@@ -615,6 +622,9 @@ public class CustomProgressBar extends FrameLayout {
         return onEmptyListener;
     }
 
+    /**
+     * @param onEmptyListener Callback for when bar reaches 0
+     */
     public void setOnEmptyListener(OnEmptyListener onEmptyListener) {
         this.onEmptyListener = onEmptyListener;
     }

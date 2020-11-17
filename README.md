@@ -16,11 +16,12 @@ A simple and easy to use customizable progress bar view for Android.
 
 ## Screenshots
 
-<img src="/screenshots/CustomProgressBar1.png" width="310" height="52"> </br>
+Here are some examples of custom progress bars:  
+<img src="/screenshots/CustomProgressBar1.png" width="400" height="70"> </br>
 </br>
-<img src="/screenshots/CustomProgressBar2.png" width="310" height="52"></br>
+<img src="/screenshots/CustomProgressBar2.png" width="400" height="70"></br>
 </br>
-<img src="/screenshots/CustomProgressBar3.png" width="310" height="52">
+<img src="/screenshots/CustomProgressBar3.png" width="400" height="70">
 
 ## Setup
 ##### Step 1
@@ -46,49 +47,50 @@ dependencies {
 Here is an example of implmentation in an activity XML file:
 ```
 <com.idankorenisraeli.customprogressbar.CustomProgressBar
-	android:layout_width="match_parent"
-	android:layout_height="50dp"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
 
-	app:barPadding="5dp"
-	app:barCornerRadius="8dp"
+    app:barPadding="5dp"
+    app:barCornerRadius="50"
 
-	app:barBackgroundColor="@color/dark_gray"
-	app:colorType="single_static"
-	app:colorStatic="@color/white"
+    app:barBackgroundColor="@color/dark_gray"
+    app:colorType="gradient"
+    app:colorStart="@color/light_gray"
+    app:colorEnd="@color/lighter_gray"
 
-	app:textType="custom_static"
-	app:textTitle="Hello World"
-	app:textPadding="5dp"
-	app:textGravity="center"
-	app:textColor="@color/light_blue"
-	
-	app:value="0.35"
+    app:textType="custom_static"
+    app:textTitle="Hello World"
+    app:textPadding="5dp"
+    app:textGravity="center"
+    app:textColor="@color/text_blue"
+
+    app:value="0.8"
 />
 ```
-Result would be:
-<img src="/screenshots/CustomProgressBar4.png" width="465" height="89"></br>
+Result would be:  
+<img src="/screenshots/CustomProgressBar4.png" width="450" height="89"></br>
 ## View Attributes
-Those attributes can be changed both via XML and programmably   
-`value` - Bar current value between 0.00 (empty) and 1.00 (full).
-`barBackgroundColor` - Single color of the background view that holds the bar.
-`barCornerRadius` - Rounded corners of both the foreground and the background.
+Those attributes can be changed both via XML and programmably.   
+`value` - Bar current value between 0.00 (empty) and 1.00 (full).  
+`barBackgroundColor` - Single color of the background view that holds the bar.  
+`barCornerRadius` - Rounded corners of both the foreground and the background.  
 `barPadding` - Padding between the background view and the inner bar.  
 
 `colorType`  
-- `single_static` - A single value color 
-- `single_dynamic` - Depending on `value`   
-- `gradient` - A Static gradient up to 3 colors
+- `single_static` - A single value color.  
+- `single_dynamic` - Depending on `value`.  
+- `gradient` - A Static gradient up to 3 colors.  
 
-`textTitle`  - Bar title as an inner text (for `custom_static` type only)
-`textPadding` - Padding between the edge/s of the view and the title 
-`textEnabled` - Title can be either shown / hidden
-`textGravity` - Title can be placed horizontally on the bar 
+`textTitle`  - Bar title as an inner text (for `custom_static` type only).  
+`textPadding` - Padding between the edge/s of the view and the title.  
+`textEnabled` - Title can be either shown / hidden.  
+`textGravity` - Title can be placed horizontally on the bar.  
 
 
 `textType`
-- `custom_static` - Text will show the string of `textTitle` 
-- `percentage` - Depending on bar value - between _0%_ and _100%_  
-- `decimal` - Depending on bar value - between _0.00_ and _1.00_  
+- `custom_static` - Text will show the string of `textTitle`. 
+- `percentage` - Depending on bar value - between _0%_ and _100%_.   
+- `decimal` - Depending on bar value - between _0.00_ and _1.00_.  
 
 ## License
 

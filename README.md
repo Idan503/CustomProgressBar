@@ -1,4 +1,5 @@
 
+
 [![](https://jitpack.io/v/Idan503/CustomProgressBar.svg)](https://jitpack.io/#Idan503/CustomProgressBar) [![GitHub license](https://img.shields.io/github/license/Idan503/CustomProgressBar?style=flat-square)](https://github.com/Idan503/CustomProgressBar)
 # CustomProgressBar
 A simple and easy to use customizable progress bar view for Android.
@@ -23,26 +24,6 @@ Here are some examples of custom progress bars:
 <img src="/screenshots/CustomProgressBar2.png" width="400" height="70"></br>
 </br>
 <img src="/screenshots/CustomProgressBar3.png" width="400" height="70">
-
-## Setup
-##### Step 1
-Add this to build.gradle of your project
-```
-allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
-}
-```
-
-##### Step 2
-Add this dependency to your build.gradle of your app
-```
-dependencies {
-	implementation 'com.github.Idan503:CustomProgressBar:<version>'
-}
-```	
 
 ## Usage
 Here is an example of implementation in an XML file:
@@ -71,34 +52,34 @@ Here is an example of implementation in an XML file:
 
 The following snippet will get you the same result programmatically:
 ```
-	CustomProgressBar cpb = new CustomProgressBar(this);
-	//Layout
-	LinearLayout.LayoutParams params = 
-		new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80);
-	cpb.setLayoutParams(params);
-	cpb.setBarPadding(5);
-	cpb.setCornerRadius(50);
+CustomProgressBar cpb = new CustomProgressBar(this);
+//Layout
+LinearLayout.LayoutParams params = 
+	new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80);
+cpb.setLayoutParams(params);
+cpb.setBarPadding(5);
+cpb.setCornerRadius(50);
 
-	// Color
-	cpb.setBackgroundColor(getColor(R.color.dark_gray));
-	cpb.setColorStart(getColor(R.color.light_gray));
-	cpb.setColorEnd(getColor(R.color.lighter_gray));
-	cpb.setColorType(ColorType.GRADIENT);
+// Color
+cpb.setBackgroundColor(getColor(R.color.dark_gray));
+cpb.setColorStart(getColor(R.color.light_gray));
+cpb.setColorEnd(getColor(R.color.lighter_gray));
+cpb.setColorType(ColorType.GRADIENT);
 
-	//Text
-	cpb.setTextType(TextType.STATIC);
-	cpb.setTextTitle("Hello World");
-	cpb.setTextPadding(5);
-	cpb.setTextGravity(TextGravity.CENTER);
-	cpb.setTextColor(getColor(R.color.text_blue));
-	cpb.setTextEnabled(true);
-	
-	cpb.setValue(0.8f);
-```
-Result would be:  
+//Text
+cpb.setTextType(TextType.STATIC);
+cpb.setTextTitle("Hello World");
+cpb.setTextPadding(5);
+cpb.setTextGravity(TextGravity.CENTER);
+cpb.setTextColor(getColor(R.color.text_blue));
+cpb.setTextEnabled(true);
+
+cpb.setValue(0.8f);
+``` 
 <img src="/screenshots/CustomProgressBar4.png" width="450" height="75"></br>
-## View Attributes
+## Attributes
 Those attributes can be changed both via XML and programmatically.   
+</br>
 `value` - Bar current value between 0.00 (empty) and 1.00 (full).  
 `barBackgroundColor` - Single color of the background view that holds the bar.  
 `barCornerRadius` - Rounded corners of both the foreground and the background.  
@@ -119,6 +100,27 @@ Those attributes can be changed both via XML and programmatically.
 - `custom_static` - Text will show the string of `textTitle`. 
 - `percentage` - Depending on bar value - between _0%_ and _100%_   
 - `decimal` - Depending on bar value - between _0.00_ and _1.00_  
+
+
+## Setup
+##### Step 1
+Add this to build.gradle of your project
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+##### Step 2
+Add this dependency to your build.gradle of your app
+```
+dependencies {
+	implementation 'com.github.Idan503:CustomProgressBar:<version>'
+}
+```	
 
 ## License
 

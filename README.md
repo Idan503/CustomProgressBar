@@ -1,4 +1,5 @@
-[![](https://jitpack.io/v/Idan503/CustomProgressBar.svg)](https://jitpack.io/#Idan503/CustomProgressBar)
+
+[![](https://jitpack.io/v/Idan503/CustomProgressBar.svg)](https://jitpack.io/#Idan503/CustomProgressBar) [![GitHub license](https://img.shields.io/github/license/Idan503/CustomProgressBar?style=flat-square)](https://github.com/Idan503/CustomProgressBar)
 # CustomProgressBar
 A simple and easy to use customizable progress bar view for Android.
 #### Main Features:  
@@ -14,11 +15,12 @@ A simple and easy to use customizable progress bar view for Android.
 
 
 ## Screenshots
-<p float="left" align="middle" padding="5">
-  <img src="/screenshots/CustomProgressBar1.png?raw=true" width="180" />
-  <img src="/screenshots/CustomProgressBar2.png?raw=true" width="180" />
-  <img src="/screenshots/CustomProgressBar3.png?raw=true" width="180" />
-</p>
+
+<img src="/screenshots/CustomProgressBar1.png" width="310" height="52"> </br>
+</br>
+<img src="/screenshots/CustomProgressBar2.png" width="310" height="52"></br>
+</br>
+<img src="/screenshots/CustomProgressBar3.png" width="310" height="52">
 
 ## Setup
 ##### Step 1
@@ -41,7 +43,7 @@ dependencies {
 ```	
 
 ## Usage
-XML implementation example:
+Here is an example of implmentation in an activity XML file:
 ```
 <com.idankorenisraeli.customprogressbar.CustomProgressBar
 	android:layout_width="match_parent"
@@ -63,9 +65,34 @@ XML implementation example:
 	app:value="0.35"
 />
 ```
+Result would be:
+<img src="/screenshots/CustomProgressBar4.png" width="465" height="89"></br>
+## View Attributes
+Those attributes can be changed both via XML and programmably   
+`value` - Bar current value between 0.00 (empty) and 1.00 (full).
+`barBackgroundColor` - Single color of the background view that holds the bar.
+`barCornerRadius` - Rounded corners of both the foreground and the background.
+`barPadding` - Padding between the background view and the inner bar.  
+
+`colorType`  
+- `single_static` - A single value color 
+- `single_dynamic` - Depending on `value`   
+- `gradient` - A Static gradient up to 3 colors
+
+`textTitle`  - Bar title as an inner text (for `custom_static` type only)
+`textPadding` - Padding between the edge/s of the view and the title 
+`textEnabled` - Title can be either shown / hidden
+`textGravity` - Title can be placed horizontally on the bar 
+
+
+`textType`
+- `custom_static` - Text will show the string of `textTitle` 
+- `percentage` - Depending on bar value - between _0%_ and _100%_  
+- `decimal` - Depending on bar value - between _0.00_ and _1.00_  
 
 ## License
 
+```
 Copyright 2020 Idan Koren-Israeli
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,3 +106,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```

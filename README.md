@@ -17,6 +17,7 @@ A simple and easy to use customizable progress bar view for Android.
 ## Screenshots
 
 Here are some examples of custom progress bars:  
+</br>
 <img src="/screenshots/CustomProgressBar1.png" width="400" height="70"> </br>
 </br>
 <img src="/screenshots/CustomProgressBar2.png" width="400" height="70"></br>
@@ -68,7 +69,7 @@ Here is an example of implmentation in an activity XML file:
 />
 ```
 Result would be:  
-<img src="/screenshots/CustomProgressBar4.png" width="450" height="89"></br>
+<img src="/screenshots/CustomProgressBar4.png" width="450" height="75"></br>
 ## View Attributes
 Those attributes can be changed both via XML and programmably.   
 `value` - Bar current value between 0.00 (empty) and 1.00 (full).  
@@ -89,8 +90,8 @@ Those attributes can be changed both via XML and programmably.
 
 `textType`
 - `custom_static` - Text will show the string of `textTitle`. 
-- `percentage` - Depending on bar value - between _0%_ and _100%_.   
-- `decimal` - Depending on bar value - between _0.00_ and _1.00_.  
+- `percentage` - Depending on bar value - between _0%_ and _100%_   
+- `decimal` - Depending on bar value - between _0.00_ and _1.00_  
 
 ## License
 

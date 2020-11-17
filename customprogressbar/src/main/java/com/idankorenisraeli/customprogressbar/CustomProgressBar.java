@@ -46,12 +46,12 @@ public class CustomProgressBar extends FrameLayout {
     private int colorStatic, colorStart, colorCenter, colorEnd;
     private int textColor;
     private boolean textEnabled;
-    private ColorType colorType;
+    private ColorType colorType = ColorType.SINGLE_STATIC;
 
 
 
-    private TextGravity textGravity; // Place the text horizontally on the bar: left/right/center/start/end
-    private TextType textType; // Should the text show a custom string, or show current bar percentage/decimal value
+    private TextGravity textGravity = TextGravity.CENTER; // Place the text horizontally on the bar: left/right/center/start/end
+    private TextType textType = TextType.STATIC; // Should the text show a custom string, or show current bar percentage/decimal value
     private String textTitle;
     private int textPadding;
     private int textPaddingLeft;
@@ -98,9 +98,13 @@ public class CustomProgressBar extends FrameLayout {
      * @param context Current context
      * @param attrs Attributes list
      */
-    private void obtainAttributes(Context context, AttributeSet attrs){
-        if(attrs==null)
+    private void obtainAttributes(Context context,@Nullable AttributeSet attrs){
+        if(attrs==null) {
+            textType = TextType.STATIC;
+            colorType = ColorType.SINGLE_STATIC;
+            textGravity = TextGravity.CENTER;
             return;
+        }
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CustomProgressBar, 0, 0);
         try {
@@ -145,7 +149,8 @@ public class CustomProgressBar extends FrameLayout {
         setLayoutTransition(new LayoutTransition());
         addView(backgroundCard);
         addView(foregroundHolder);
-        addView(text);
+        if(text!=null)
+            addView(text);
     }
 
 

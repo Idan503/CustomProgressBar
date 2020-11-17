@@ -17,13 +17,10 @@ A simple and easy to use customizable progress bar view for Android.
 
 ## Screenshots
 
-Here are some examples of custom progress bars:  
 </br>
-<img src="/screenshots/CustomProgressBar1.png" width="400" height="70"> </br>
+<img src="/screenshots/CustomProgressBar1.png" width="350" height="70"> </br>
 </br>
-<img src="/screenshots/CustomProgressBar2.png" width="400" height="70"></br>
-</br>
-<img src="/screenshots/CustomProgressBar3.png" width="400" height="70">
+<img src="/screenshots/CustomProgressBar2.png" width="350" height="70"></br>
 
 ## Usage
 Here is an example of implementation in an XML file:
@@ -76,7 +73,7 @@ cpb.setTextEnabled(true);
 
 cpb.setValue(0.8f);
 ``` 
-<img src="/screenshots/CustomProgressBar4.png" width="450" height="75"></br>
+<img src="/screenshots/CustomProgressBar4.png" width="350" height="58"></br>
 ## Attributes
 Those attributes can be changed both via XML and programmatically.   
 </br>

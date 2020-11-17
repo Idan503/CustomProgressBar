@@ -163,29 +163,20 @@ public class CustomProgressBar extends FrameLayout {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
         backgroundCard.setLayoutParams(params);
 
-        backgroundCard.setCardBackgroundColor(backgroundColor); // background colors from attr
-        backgroundCard.setRadius(cornerRadius);
+        updateBackground();
     }
 
 
     private void initForeground(Context context) {
         foregroundHolder = new LinearLayout(context);
-        FrameLayout.LayoutParams holderParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        holderParams.setMargins(barPadding,barPadding,barPadding,barPadding);
 
-        foregroundHolder.setLayoutParams(holderParams);
         foregroundHolder.setOrientation(LinearLayout.HORIZONTAL);
         foregroundHolder.setTranslationZ(90); //bring to front
         foregroundHolder.setWeightSum(1);
-        foregroundHolder.setLayoutTransition(new LayoutTransition());
 
         foregroundCard = new CardView(context);
-        foregroundCard.setLayoutTransition(new LayoutTransition());
 
-        updateColor();
-
-        updateValue();
+        updateForeground();
         foregroundHolder.addView(foregroundCard);
     }
 
@@ -198,23 +189,7 @@ public class CustomProgressBar extends FrameLayout {
      */
     private void initText(Context context) {
         text = new TextView(context);
-        FrameLayout.LayoutParams params =
-                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        if(textPadding!=0)
-            params.setMargins(textPadding, textPadding, textPadding, textPadding);
-
-
-        if(textPaddingStart!=0 || textPaddingEnd!=0) {
-            params.setMarginStart(textPaddingStart);
-            params.setMarginEnd(textPaddingEnd);
-        }
-        else {
-            if(textPaddingLeft !=0 || textPaddingRight != 0)
-                params.setMargins(textPaddingLeft, textPadding, textPaddingRight, textPadding);
-        }
-
-        text.setLayoutParams(params);
 
         text.setMaxLines(1);
         text.setLines(1);
@@ -225,7 +200,7 @@ public class CustomProgressBar extends FrameLayout {
         updateText();
 
 
-        text.setTextColor(textColor);
+
         text.setTranslationZ(90);
 
     }
@@ -335,6 +310,17 @@ public class CustomProgressBar extends FrameLayout {
     }
 
 
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        updateBackground();
+        updateForeground();
+        updateText();
+    }
+
+
+    //region Update UI Methods
+
     private void updateColor(){
         switch (colorType){
             case SINGLE_STATIC:
@@ -360,15 +346,21 @@ public class CustomProgressBar extends FrameLayout {
 
     }
 
+    private void updateBackground(){
+        backgroundCard.setCardBackgroundColor(backgroundColor); // background colors from attr
+        backgroundCard.setRadius(cornerRadius);
+    }
 
 
+    private void updateForeground(){
+        FrameLayout.LayoutParams holderParams = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        holderParams.setMargins(barPadding,barPadding,barPadding,barPadding);
 
-    @Override
-    public void invalidate() {
-        super.invalidate();
-        updateValue();
-        updateText();
+        foregroundHolder.setLayoutParams(holderParams);
+
         updateColor();
+        updateValue();
     }
 
     /**
@@ -390,12 +382,12 @@ public class CustomProgressBar extends FrameLayout {
     @SuppressLint("RtlHardcoded")
     private void updateText()
     {
-        if(textEnabled) {
-            text.setVisibility(VISIBLE);
+        if(!textEnabled) {
+            text.setVisibility(GONE);
             return; //Text will not be shown anyway
         }
         else
-            text.setVisibility(GONE);
+            text.setVisibility(VISIBLE);
 
         float roundedValue;
         switch (textType){
@@ -435,7 +427,29 @@ public class CustomProgressBar extends FrameLayout {
             default:
                 text.setGravity(Gravity.CENTER  | Gravity.CENTER_VERTICAL);
         }
+
+        // Update padding
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        if(textPadding!=0)
+            params.setMargins(textPadding, textPadding, textPadding, textPadding);
+
+
+        if(textPaddingStart!=0 || textPaddingEnd!=0) {
+            params.setMarginStart(textPaddingStart);
+            params.setMarginEnd(textPaddingEnd);
+        }
+        else {
+            if(textPaddingLeft !=0 || textPaddingRight != 0)
+                params.setMargins(textPaddingLeft, textPadding, textPaddingRight, textPadding);
+        }
+
+        text.setLayoutParams(params);
+        text.setTextColor(textColor);
     }
+
+    //endregion
 
 
     //region Getters & Setters
@@ -454,6 +468,7 @@ public class CustomProgressBar extends FrameLayout {
             onFullListener.onBarFull();
         if(value==0 && onEmptyListener !=null)
             onEmptyListener.onBarEmpty();
+
 
         invalidate();
     }
@@ -518,11 +533,11 @@ public class CustomProgressBar extends FrameLayout {
 
     public void setTextTitle(String textTitle) {
         this.textTitle = textTitle;
-        if(!textEnabled)
-            Log.w(TAG, "A new title is set, although text is disabled\n" +
-                    "In order to show text, set 'textEnabled' attribute to true");
-        else
-            invalidate(); //Update the view to show the new text
+        if(!textEnabled) {
+            textEnabled = true;
+            Log.w(TAG, "A new title is set, 'textEnabled' attribute was turned on automatically");
+        }
+        invalidate(); //Update the view to show the new text
     }
 
     public TextGravity getTextGravity() {

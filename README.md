@@ -18,9 +18,9 @@ A simple and easy to use customizable progress bar view for Android.
 ## Screenshots
 
 </br>
-<img src="/screenshots/CustomProgressBar1.png" width="350" height="70"> </br>
+<img src="/screenshots/CustomProgressBar1.png" width="350" height="60"> </br>
 </br>
-<img src="/screenshots/CustomProgressBar2.png" width="350" height="70"></br>
+<img src="/screenshots/CustomProgressBar2.png" width="350" height="60"></br>
 
 ## Usage
 Here is an example of implementation in an XML file:
@@ -50,6 +50,7 @@ Here is an example of implementation in an XML file:
 The following snippet will get you the same result programmatically:
 ```
 CustomProgressBar cpb = new CustomProgressBar(this);
+
 //Layout
 LinearLayout.LayoutParams params = 
 	new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80);

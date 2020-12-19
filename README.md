@@ -1,4 +1,5 @@
 
+
 [![](https://jitpack.io/v/Idan503/CustomProgressBar.svg)](https://jitpack.io/#Idan503/CustomProgressBar) [![GitHub license](https://img.shields.io/github/license/Idan503/CustomProgressBar?style=flat-square)](https://github.com/Idan503/CustomProgressBar)
 # CustomProgressBar
 A simple and easy to use customizable progress bar view for Android.
@@ -17,7 +18,7 @@ A simple and easy to use customizable progress bar view for Android.
 ## Screenshots
 
 </br>
-<img src="/screenshots/bar_dynamic_animation.gif" width="500" height="80"> </br>
+<img src="/screenshots/bar_dynamic_animation.gif" width="485" height="75"> </br>
 
 ## Usage
 Here is an example of implementation in an XML file:
@@ -44,34 +45,8 @@ Here is an example of implementation in an XML file:
 />
 ```
 
-The following snippet will get you the same result programmatically:
-```
-CustomProgressBar cpb = new CustomProgressBar(this);
-
-//Layout
-LinearLayout.LayoutParams params = 
-	new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80);
-cpb.setLayoutParams(params);
-cpb.setBarPadding(5);
-cpb.setCornerRadius(50);
-
-// Color
-cpb.setBackgroundColor(getColor(R.color.dark_gray));
-cpb.setColorStart(getColor(R.color.light_gray));
-cpb.setColorEnd(getColor(R.color.lighter_gray));
-cpb.setColorType(ColorType.GRADIENT);
-
-//Text
-cpb.setTextType(TextType.STATIC);
-cpb.setTextTitle("Hello World");
-cpb.setTextPadding(5);
-cpb.setTextGravity(TextGravity.CENTER);
-cpb.setTextColor(getColor(R.color.text_blue));
-cpb.setTextEnabled(true);
-
-cpb.setValue(0.8f);
-``` 
 <img src="/screenshots/CustomProgressBar4.png" width="350" height="58"></br>
+The same result can be achieved similarly programmatically, a full example can be found in README_LONG.md file
 
 ## Setup
 ##### Step 1

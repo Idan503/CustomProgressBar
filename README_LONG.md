@@ -16,8 +16,7 @@ A simple and easy to use customizable progress bar view for Android.
 ## Screenshots
 
 </br>
-<img src="/screenshots/bar_dynamic_animation.gif" width="350" height="60"> </br>
-</br>
+<img src="/screenshots/bar_dynamic_animation.gif" width="500" height="80"> </br>
 
 ## Usage
 Here is an example of implementation in an XML file:

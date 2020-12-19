@@ -1,4 +1,3 @@
-
 [![](https://jitpack.io/v/Idan503/CustomProgressBar.svg)](https://jitpack.io/#Idan503/CustomProgressBar) [![GitHub license](https://img.shields.io/github/license/Idan503/CustomProgressBar?style=flat-square)](https://github.com/Idan503/CustomProgressBar)
 # CustomProgressBar
 A simple and easy to use customizable progress bar view for Android.
@@ -73,6 +72,30 @@ cpb.setTextEnabled(true);
 cpb.setValue(0.8f);
 ``` 
 <img src="/screenshots/CustomProgressBar4.png" width="350" height="58"></br>
+## Attributes
+Those attributes can be changed both via XML and programmatically.   
+</br>
+`value` - Bar current value between 0.00 (empty) and 1.00 (full).  
+`barBackgroundColor` - Single color of the background view that holds the bar.  
+`barCornerRadius` - Rounded corners of both the foreground and the background.  
+`barPadding` - Padding between the background view and the inner bar.  
+ 
+
+`textTitle`  - Bar title as an inner text (for `custom_static` type only).  
+`textPadding` - Padding between the edge/s of the view and the title.  
+`textEnabled` - Title can be either shown / hidden.  
+`textGravity` - Title can be placed horizontally on the bar.  
+
+`colorType`  
+- `single_static` - A single value color.  
+- `single_dynamic` - Depending on `value`.  
+- `gradient` - A Static gradient up to 3 colors.  
+
+`textType`
+- `custom_static` - Text will show the string of `textTitle`. 
+- `percentage` - Depending on bar value - between _0%_ and _100%_   
+- `decimal` - Depending on bar value - between _0.00_ and _1.00_  
+
 
 ## Setup
 ##### Step 1

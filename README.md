@@ -28,7 +28,7 @@ Here is an example of implementation in an XML file:
     android:layout_height="50dp"
 
     app:barPadding="5dp"
-    app:barCornerRadius="50"
+    app:barCornerRadius="50dp"
 
     app:barBackgroundColor="@color/dark_gray"
     app:colorType="gradient"
